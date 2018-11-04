@@ -1,4 +1,5 @@
-package Player;
+package BecomeAMasterChef.Player;
+
 
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -6,9 +7,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Player {
-    private String name;
+    private String playerName;
     private int totalScore;
     private int ingredients = 3;
+    private boolean isAlive = true;
     private List<Object> objects;
     //Deque<Cell> path = new ArrayDeque<Cell>();
     //Cell currentPosition=null;//= path.peekLast();
@@ -20,16 +22,16 @@ public class Player {
 		System.out.println("What is your name?");
 		String player1Name = input1.nextLine();
 		if (player1Name.equals("")) {
-			setName("Player");
+			setPlayerName("Player");
 		}else
-		setName(player1Name);
+		setPlayerName(player1Name);
     }
-    public void setName(String name){
-        this.name = name;
+    public void setPlayerName(String name){
+        this.playerName = name;
     }
 
-    public  String getName(){
-        return this.name;
+    public  String getPlayerName(){
+        return this.playerName;
     }
 
     public int getIngredients(){
