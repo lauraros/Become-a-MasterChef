@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Player {
-    private String playerName;
+    public String playerName;
     private int totalScore;
     private int ingredients = 3;
     private boolean isAlive = true;
