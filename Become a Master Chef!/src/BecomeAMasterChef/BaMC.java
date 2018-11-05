@@ -10,12 +10,15 @@ import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingUtilities;
 
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ComboBoxModel;
@@ -37,11 +40,15 @@ public class BaMC{
 	}
 
 	private void initUI() {
+		final String gapList[] = {"0", "10", "15", "20"};
+	    final int maxGap = 20;
+	    String playerName = null;
+	    String gameLevel = null;
 
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Become a MasterChef!");
-		frame.setSize(350, 200);
+		frame.setSize(400, 150);
 
 		
 		JPanel mainPanel = new JPanel();
@@ -54,7 +61,12 @@ public class BaMC{
 		mainPanel.add(settingsPanel, BorderLayout.CENTER);
 		//JPanel panel = new JPanel();
 		//panel.setBackground(Color.white);
-		settingsPanel.setSize(new Dimension(20, 20));
+		//settingsPanel.setResizable(false);
+		JButton b = new JButton("Just fake button");
+        Dimension buttonSize = b.getPreferredSize();
+		settingsPanel.setPreferredSize(new Dimension((int)(buttonSize.getWidth() * 2.5)+maxGap,
+                (int)(buttonSize.getHeight() * 3.5)+maxGap * 2));
+		
         //GridBagConstraints gbc = new GridBagConstraints();
         
         JLabel nameLabel = new JLabel("What's your name? ");
@@ -78,14 +90,31 @@ public class BaMC{
 
 		//frame.pack();
 		frame.setVisible(true);
-	}
+		
+        //Process the Apply gaps button press
+        okButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                //Get the horizontal gap value
+                String playerName = (String)nameField.getText();
+                //Get the vertical gap value
+                String gameLevel = (String)level.getSelectedItem();
+                System.out.println(playerName);
+                System.out.println(gameLevel );
+            }
+        });
+        
+		
+        }
 
 
 
 	public static void main(String[] args) {
 
-		EventQueue.invokeLater(() -> {
-			BaMC play = new BaMC();
+		SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+            	BaMC play = new BaMC();
+            }
+			
 			//play.setVisible(true);
 		});
 	}
