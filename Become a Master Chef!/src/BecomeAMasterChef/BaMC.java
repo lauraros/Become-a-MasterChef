@@ -100,6 +100,9 @@ public class BaMC{
                 String gameLevel = (String)level.getSelectedItem();
                 System.out.println(playerName);
                 System.out.println(gameLevel );
+                //private Player= new Player(name, chopping, cooking)
+                //		level
+                //		Game(Player, level)
             }
         });
         
