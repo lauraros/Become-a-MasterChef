@@ -83,8 +83,8 @@ public class Player {
     }*/
 
 	public void printRecap() {
-		String recap="You have "+this.getIngredients()+" ingredients and a score of "+this.getTotalScore()+".";
-		System.out.println(recap);
+		//String recap="You have "+this.getIngredients()+" ingredients and a score of "+this.getTotalScore()+".";
+		//System.out.println(recap);
 	}
 
 

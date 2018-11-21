@@ -150,7 +150,7 @@ public class BaMC{
         }
 
 
-
+/*
 	public static void main(String[] args) {
 
 		EventQueue.invokeLater(new Runnable() {
@@ -165,4 +165,5 @@ public class BaMC{
 			//play.setVisible(true);
 		});
 	}
+*/
 }
