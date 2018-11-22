@@ -1,105 +1,145 @@
 package BecomeAMasterChef;
 
+import javax.swing.JFrame;
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Button;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import javax.swing.border.BevelBorder;
+import javax.swing.JLabel;
+import java.awt.Font;
+import java.awt.SystemColor;
+import java.awt.FlowLayout;
+import javax.swing.SwingConstants;
+import javax.swing.JTextField;
+import java.awt.Insets;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.border.CompoundBorder;
+import java.awt.CardLayout;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import java.awt.Color;
 import java.awt.Dimension;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.JSpinner;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
+
+import javax.swing.border.EtchedBorder;
+
+import BecomeAMasterChef.Player.Player;
+
+import javax.swing.JButton;
+
 import javax.swing.SwingUtilities;
 
 import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
-import javax.swing.ComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-
-import java.awt.BorderLayout;
-
-
-
 
 public class BaMC{
+
 	
-
 	public BaMC() {
-
-		initUI();
+		//Player player= new Player();
+		initGUI();
 	}
 
-	private void initUI() {
-		final String gapList[] = {"0", "10", "15", "20"};
-	    final int maxGap = 20;
-	    String playerName = null;
-	    String gameLevel = null;
-
+	private void initGUI() {
 		JFrame frame = new JFrame();
+		frame.setTitle("Become a Master Chef!");
+		frame.setBounds(100, 100, 360, 240);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setTitle("Become a MasterChef!");
-		frame.setSize(400, 150);
-
+		frame.getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JPanel mainPanel = new JPanel();
-		mainPanel.setLayout(new BorderLayout());
-		JLabel welcome = new JLabel("Welcome to... Become a MasterChef!");
-		welcome.setFont(new Font("", Font.PLAIN, 15));
-		mainPanel.add(welcome, BorderLayout.NORTH);
-		JPanel settingsPanel = new JPanel();
-		settingsPanel.setLayout(new GridLayout(2,2));
-		mainPanel.add(settingsPanel, BorderLayout.CENTER);
-		//JPanel panel = new JPanel();
-		//panel.setBackground(Color.white);
-		//settingsPanel.setResizable(false);
-		JButton b = new JButton("Just fake button");
-        Dimension buttonSize = b.getPreferredSize();
-		settingsPanel.setPreferredSize(new Dimension((int)(buttonSize.getWidth() * 2.5)+maxGap,
-                (int)(buttonSize.getHeight() * 3.5)+maxGap * 2));
+		frame.getContentPane().add(mainPanel);
+		mainPanel.setLayout(new GridLayout(5, 2, 0, 0));
+		mainPanel.setPreferredSize(new Dimension(350, 200));
 		
-        //GridBagConstraints gbc = new GridBagConstraints();
-        
-        JLabel nameLabel = new JLabel("What's your name? ");
-        JTextArea nameField = new JTextArea ("");
-        //JLabel level = new JLabel("Level");
-        JLabel levelLabel = new JLabel("Which level do you want to play? ");
-        SpinnerNumberModel levelModel = new SpinnerNumberModel(1,1,5,1);
-        String[] levels = new String[] {"Easy", "Normal", "Hard", "Hardest"};
-        JComboBox<String> level = new JComboBox<String>(levels);
-        
+		JLabel welcome = new JLabel("Welcome to Become a Master Chef!");
+		welcome.setHorizontalAlignment(SwingConstants.CENTER);
+		welcome.setFont(new Font("Tahoma", Font.BOLD, 14));
+		mainPanel.add(welcome);
+		
+		JPanel pSettings = new JPanel();
+		mainPanel.add(pSettings);
+		pSettings.setLayout(null);
+		
+		JLabel playerNameLabel = new JLabel("What's your name?");
+		playerNameLabel.setBounds(0, 0, 171, 19);
+		playerNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		pSettings.add(playerNameLabel);
+		
+		JTextField playerNameField = new JTextField();
+		playerNameField.setBounds(200, 0, 120, 19);
+		playerNameField.setHorizontalAlignment(SwingConstants.RIGHT);
+		pSettings.add(playerNameField);
+		playerNameField.setColumns(10);
+		
+		JLabel levelLabel = new JLabel("Which level you want to play?");
+		levelLabel.setBounds(0, 20, 171, 19);
+		levelLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		pSettings.add(levelLabel);
+		
+		JComboBox levelBox = new JComboBox();
+		levelBox.setBounds(200, 20, 120, 19);
+		levelBox.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
+		levelBox.setModel(new DefaultComboBoxModel(new String[] {"Easy", "Medium", "Hard", "Hardest"}));
+		pSettings.add(levelBox);
+		
+		JLabel creditsLabel = new JLabel("<html>People have talents... set up yours! <br>(You have 10 points in total.)</html>");
+		creditsLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		creditsLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
+		mainPanel.add(creditsLabel);
+		
+		JPanel pSkills = new JPanel();
+		mainPanel.add(pSkills);
+		FlowLayout fl_pSkills = new FlowLayout(FlowLayout.CENTER, 2, 2);
+		pSkills.setLayout(fl_pSkills);
+		
+		JLabel Skill1Label = new JLabel("Chopping");
+		Skill1Label.setForeground(new Color(165, 42, 42));
+		Skill1Label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		pSkills.add(Skill1Label);
+		
+		JSpinner skill1V = new JSpinner();
+		skill1V.setModel(new SpinnerNumberModel(5, 0, 10, 1));
+		pSkills.add(skill1V);
+		
+		JLabel Skill2Label = new JLabel("Boiling");
+		Skill2Label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		Skill2Label.setForeground(new Color(0, 128, 128));
+		pSkills.add(Skill2Label);
+		
+		JTextField skill2V = new JTextField();
+		int skill1 = (int) skill1V.getValue();
+		int skill2 = 10 - skill1;
+		skill2V.setText(Integer.toString(skill2));
+		skill2V.setHorizontalAlignment(SwingConstants.CENTER);
+		skill2V.setEditable(false);
+		pSkills.add(skill2V);
+		skill2V.setColumns(10);
+	
+		
+		JButton okButton = new JButton("OK");
+		okButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+		okButton.setForeground(new Color(0, 0, 205));
+		mainPanel.add(okButton);
 
-        settingsPanel.add(nameLabel);
-        settingsPanel.add(nameField);
-        settingsPanel.add(levelLabel);
-        settingsPanel.add(level);
-        frame.add(mainPanel);
-
-        JButton okButton = new JButton("OK");
-        mainPanel.add(okButton, BorderLayout.SOUTH);
-		//frame.getContentPane().add(panel);
-
-		//frame.pack();
+		frame.pack();
 		frame.setVisible(true);
 		
-        //Process the Apply gaps button press
+        //Process the button press
         okButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 //Get the horizontal gap value
-                String playerName = (String)nameField.getText();
+                String playerName = (String)playerNameField.getText();
                 //Get the vertical gap value
-                String gameLevel = (String)level.getSelectedItem();
-                System.out.println(playerName);
-                System.out.println(gameLevel );
+                String gameLevel = (String)levelBox.getSelectedItem();
+                //System.out.println(playerName);
+                System.out.println("hello" );
                 //private Player= new Player(name, chopping, cooking)
                 //		level
                 //		Game(Player, level)
@@ -113,9 +153,13 @@ public class BaMC{
 
 	public static void main(String[] args) {
 
-		SwingUtilities.invokeLater(new Runnable() {
+		EventQueue.invokeLater(new Runnable() {
             public void run() {
-            	BaMC play = new BaMC();
+            	try {
+            		BaMC play = new BaMC();
+            	}catch (Exception e) {
+            		e.printStackTrace();
+            	}
             }
 			
 			//play.setVisible(true);

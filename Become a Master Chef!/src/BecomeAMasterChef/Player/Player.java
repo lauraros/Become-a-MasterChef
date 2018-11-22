@@ -16,7 +16,7 @@ public class Player {
     //Cell currentPosition=null;//= path.peekLast();
     //Cell previousPosition=null;//= path.peekLast();
     
-    Player() {
+    public Player() {
 		//Player player2= new Player();
 		Scanner input1= new Scanner(System.in);
 		System.out.println("What is your name?");
