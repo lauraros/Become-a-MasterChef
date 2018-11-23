@@ -27,6 +27,7 @@ import java.awt.Dimension;
 
 import javax.swing.border.EtchedBorder;
 
+import BecomeAMasterChef.Board.Board;
 import BecomeAMasterChef.Player.Player;
 
 import javax.swing.JButton;
@@ -135,9 +136,16 @@ public class BaMC{
         okButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 //Get the horizontal gap value
+
                 String playerName = (String)playerNameField.getText();
+                String level = (String)levelBox.getSelectedItem();
+                int cookingSkills =(Integer)skill1V.getValue(); 
+                int chopping = Integer.valueOf((String)skill2V.getText());
+            	SetUp newSetUp = new SetUp(playerName, level, cookingSkills, chopping);
+            	JLabel statusbar = new JLabel(frame.getTitle());
+            	Board newBoard = new Board(statusbar);
+
                 //Get the vertical gap value
-                String gameLevel = (String)levelBox.getSelectedItem();
                 //System.out.println(playerName);
                 System.out.println("hello" );
                 //private Player= new Player(name, chopping, cooking)
@@ -150,7 +158,7 @@ public class BaMC{
         }
 
 
-/*
+
 	public static void main(String[] args) {
 
 		EventQueue.invokeLater(new Runnable() {
@@ -165,5 +173,5 @@ public class BaMC{
 			//play.setVisible(true);
 		});
 	}
-*/
+
 }

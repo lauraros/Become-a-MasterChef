@@ -4,31 +4,24 @@ import BecomeAMasterChef.Player.Player;
 
 public class SetUp {
 	private Player player = new Player();
-	private String level;
+	private Level newlevel = new Level();
 	private int skill1;
 	private int skill2;
 	
 	public SetUp(String playerName, String level, int skill1, int skill2) {
 		player.setPlayerName(playerName);
-		setLevel(level);
+		newlevel.setLevelName(level);
 		this.skill1 = skill1;
 		this.skill2 = skill2;
 	}
 	public SetUp(String level, int skill1, int skill2) {
 		player.setPlayerName("Player");
-		this.level = level;
+		newlevel.setLevelName(level);
 		this.skill1 = skill1;
 		this.skill2 = skill2;
 	}
 	
-	public void setLevel(String level){
-		this.level = level;
-	}
-	
-	public String getLevel(){
-		return this.level;
-	}
-	
+
 	public void setSkill1(int skill1){
 		this.skill1 = skill1;
 	}
@@ -43,6 +36,12 @@ public class SetUp {
 	
 	public int getSkill2(){
 		return this.skill2;
+	}
+	public Level getNewlevel() {
+		return newlevel;
+	}
+	public void setNewlevel(Level newlevel) {
+		this.newlevel = newlevel;
 	}
 	
 }

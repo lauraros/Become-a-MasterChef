@@ -1,17 +1,16 @@
 package BecomeAMasterChef;
 
 public class Level {
-	private int level;
+	private String levelName;
 	private int init_energy;									//initial energy
 	private int init_cooking_skills;							//initial cooking_skills
 	private int init_chopping = 10 - init_cooking_skills;		//initial chopping
 	private int italian_chef_skill;							//Italian chef's cooking_skills
 	private int chinese_chef_skill;							//Chinese chef's chopping
 	
-	public Level(int level) {
-		this.level = level;
-	
-		switch (level) {
+	public Level() {
+
+		switch (levelName) {
 		case 1: 
 			init_energy = 50;
 			italian_chef_skill = 4;
@@ -37,6 +36,18 @@ public class Level {
 			break;
 		}
 	}
+	
+	public void setLevelName(String levelName){
+		this.levelName = levelName;
+	}
+	
+	public String getLevelName(){
+		return this.levelName;
+	}
+	
+	
+	
+	
 	
 	public void setInitCookingSkills(int value) {
 		init_cooking_skills = value;
