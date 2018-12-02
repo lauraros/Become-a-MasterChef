@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 
 public class Board extends JPanel {
     // Constants
-    private final int CELL_SIZE  = 15;			//change to larger size
+    private final int CELL_SIZE  = 50;
     private final int NUM_IMAGES = 8;
 
     private final int IMAGE_GOAL       		= 0;
@@ -30,14 +30,19 @@ public class Board extends JPanel {
 
     private JLabel statusBar;
 
-    private int total_italian_chef = 3;
-    private int total_chinese_chef = 3;
-    private int total_bonus = 3;
-    private int total_minus = 3;
+    private int num_player = 1;
+    private int num_goal = 1;
+    private int num_bonus = 3;
+    private int num_minus = 3;
+    private int num_italian_chef = 3;
+    private int num_chinese_chef = 3;
 
     private int rows = 16, columns = 16;
 
+    private int energy;
+    
     private Cell[][] cells;
+    private Cell playerCell;
     private Image[] img;
     private Gamer player;
     private Level level;
@@ -49,7 +54,7 @@ public class Board extends JPanel {
 
         this.img = new Image[NUM_IMAGES];
         for (int i = 0; i < NUM_IMAGES; i++) {
-            String path = "img/j" + i + ".gif";
+            String path = "img/g" + i + ".tiff";
             img[i] = new ImageIcon(path).getImage();
         }
 
@@ -70,31 +75,85 @@ public class Board extends JPanel {
 
     public void newGame () {
         Random random = new Random();
-        player = new Gamer("Fihser");		//import player_name from BaMC
-        level = new Level(1);				//import level from Level
+        player = new Gamer("Fihser");		//import player
+        level = new Level();				//import level
+        energy = level.getInitEnergy();
+        player.setEnergy(energy);
         
         this.inGame = true;
 
         this.initCells();
         this.statusBar.setText(Integer.toString(this.player.getEnergy()));
 
-        int energy = level.getInitEnergy();
-        while (energy >= 0) {
+        while (num_player >= 0) {
+            int randX = random.nextInt(this.rows);
+            int randY = random.nextInt(this.columns);
+
+            playerCell = this.cells[randX][randY];
+            if (playerCell.isEmpty()) {
+                playerCell.setPlayer(true);
+                num_player--;
+            }
+        }
+        
+        while (num_goal >= 0) {
             int randX = random.nextInt(this.rows);
             int randY = random.nextInt(this.columns);
 
             Cell cell = this.cells[randX][randY];
-            if (!cell.isPlayer()) {
-                cell.setPlayer(true);
-                energy--;
+            if (cell.isEmpty()) {
+                cell.setGoal();
+                num_goal--;
+            }
+        }
+        
+        while (num_bonus >= 0) {
+            int randX = random.nextInt(this.rows);
+            int randY = random.nextInt(this.columns);
+
+            Cell cell = this.cells[randX][randY];
+            if (cell.isEmpty()) {
+                cell.setBonus();
+                num_bonus--;
+            }
+        }
+        
+        while (num_minus >= 0) {
+            int randX = random.nextInt(this.rows);
+            int randY = random.nextInt(this.columns);
+
+            Cell cell = this.cells[randX][randY];
+            if (cell.isEmpty()) {
+                cell.setMinus();
+                num_minus--;
             }
         }
 
-        this.player.setEnergy(energy);
+        while (num_italian_chef >= 0) {
+            int randX = random.nextInt(this.rows);
+            int randY = random.nextInt(this.columns);
+
+            Cell cell = this.cells[randX][randY];
+            if (cell.isEmpty()) {
+                cell.setItalianChef();
+                num_italian_chef--;
+            }
+        }
+        
+        while (num_chinese_chef >= 0) {
+            int randX = random.nextInt(this.rows);
+            int randY = random.nextInt(this.columns);
+
+            Cell cell = this.cells[randX][randY];
+            if (cell.isEmpty()) {
+                cell.setChineseChef();
+                num_chinese_chef--;
+            }
+        }   
     }
 
     public void paint(Graphics g) {
-        int coveredCells = 0;
+        int highscore = 0;
 
         for (int i = 0; i < this.rows; i++) {
             for (int j = 0; j < this.columns; j++) {
@@ -102,17 +161,31 @@ public class Board extends JPanel {
                 int imageType;
                 int xPosition, yPosition;
 
-                if (!cell.isVisible()) {
-                    coveredCells++;
-                }
-
-                if (inGame) {
+                if (inGame) {	
                     if (player.getEnergy() == 0) {
                         inGame = false;
                     }
                 }
+                
+            	if (cell.isGoal() && cell.isPlayer() && player.getEnergy() >= 0) {
+                    inGame = false;
+                    statusBar.setText("Game Won");
+                    highscore = player.getEnergy() + player.getChopping() + player.getCookingSkills();
+                    if (highscore > player.getHighScore()) {
+                    	player.setHighScore(highscore);
+                    }
+                } else if (!inGame) {
+                    statusBar.setText("You're out of energy. Game Lost!");
+                }
 
-                imageType = this.decideImageType(cell);
+            	if (isAroundPlayer(i,j)) {
+            		cell.setVisible(true);
+            	}
+            	else {
+            		cell.setVisible(false);
+            	}
+            	
+            	imageType = this.decideImageType(cell);
 
                 xPosition = (j * CELL_SIZE);
                 yPosition = (i * CELL_SIZE);
@@ -120,45 +193,44 @@ public class Board extends JPanel {
                 g.drawImage(img[imageType], xPosition, yPosition, this);
             }
         }
-
-        if (cell.isGoal() && cell.isPlayer()) {
-            inGame = false;
-            statusBar.setText("Game Won");
-            //calculate and update high score
-        } else if (!inGame) {
-            statusBar.setText("Game Lost");
-        }
     }
 
     private int decideImageType(Cell cell) {
-        int imageType;
-
-        if (!inGame) {
-            if (cell.isGoal()) {
-                imageType = IMAGE_GOAL;
-            } else if (cell.isPlayer()) {
-                imageType = IMAGE_PLAYER;
-            } else if (cell.isBonus()) {
-                imageType = IMAGE_BONUS;
-            } else if (cell.isMinus()) {
-            	imageType = IMAGE_MINUS;
-            } else if (cell.isChineseChef()) {
-                imageType = IMAGE_CHINESE_CHEF;
-            } else if (cell.isItalianChef()) {
-            	imageType = IMAGE_ITALIAN_CHEF;
-            } else {
-                imageType = IMAGE_VISIBLE;
-            }
+        int imageType = 0;
+    	
+        if (cell.isVisible()) {
+	        if (cell.isEmpty()) {
+	        	imageType = IMAGE_VISIBLE;
+	        }
+	        
+	        else if (cell.isPlayer()) {
+	    		imageType = IMAGE_PLAYER;
+	    	}
+	    	
+	    	else if (cell.isGoal()) {
+	    		imageType = IMAGE_GOAL;
+	    	}
+	    	
+	    	else if (cell.isBonus()) {
+	    		imageType = IMAGE_BONUS;
+	    	}
+	    	
+	    	else if (cell.isMinus()) {
+	    		imageType = IMAGE_MINUS;
+	    	}
+	    	
+	    	else if (cell.isChineseChef()) {
+	    		imageType = IMAGE_CHINESE_CHEF;
+	    	}
+	    	
+	    	else if (cell.isItalianChef()) {
+	    		imageType = IMAGE_ITALIAN_CHEF;
+	    	}
         }
         
-        else {
-        	if (isAroundPlayer() && cell.is) {
-        		imageType = IMAGE_COVER;
-        	}
-        	else {
-        		imageType = IMAGE_COVER;
-        	}
-        }
+    	else if (!cell.isVisible()){
+    		imageType = IMAGE_COVER;
+    	}
 
         return imageType;
     }
@@ -190,87 +262,7 @@ public class Board extends JPanel {
         
         return around_player;
     }
-    
-    public void findEmptyCells(int x, int y, int depth) {
 
-        for (int i = -1; i <= 1; ++i) {
-            int xIndex = x + i;
-
-            if (xIndex < 0 || xIndex >= this.rows) {
-                continue;
-            }
-
-            for (int j = -1; j <= 1; ++j) {
-                int yIndex = y + j;
-
-                if (yIndex < 0 || yIndex >= this.columns) {
-                    continue;
-                }
-
-                if (!(i == 0 || j == 0)) {
-                    continue;
-                }
-
-                Cell cell = this.cells[xIndex][yIndex];
-                if (checkEmpty(cell)) {
-                    cell.uncover();
-                    cell.checked();
-
-                    uncoverAroundCell(xIndex, yIndex);
-                    findEmptyCells(xIndex, yIndex, depth + 1);
-                }
-            }
-        }
-
-        if (depth == 0) {
-            this.clearAllCells();
-        }
-    }
-
-    private void uncoverAroundCell(int x, int y) {
-        for (int i = -1; i <= 1; ++i) {
-            int xIndex = x + i;
-
-            if (xIndex < 0 || xIndex >= this.rows) {
-                continue;
-            }
-
-            for (int j = -1; j <= 1; ++j) {
-                int yIndex = y + j;
-
-                if (yIndex < 0 || yIndex >= this.columns) {
-                    continue;
-                }
-
-                if (i == 0 || j == 0) {
-                    continue;
-                }
-
-                Cell cell = this.cells[xIndex][yIndex];
-                if (cell.isCovered() && !cell.isEmpty()) {
-                    cell.uncover();
-                }
-            }
-        }
-    }
-
-    private boolean checkEmpty(Cell cell) {
-        if (!cell.isChecked()) {
-            if (cell.isEmpty()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private void clearAllCells() {
-        for (int i = 0; i < this.rows; ++i) {
-            for (int j = 0; j < this.columns; ++j) {
-                this.cells[i][j].clearChecked();
-            }
-        }
-    }
 
     class MinesAdapter extends MouseAdapter {
         public void mousePressed(MouseEvent e) {
@@ -294,54 +286,50 @@ public class Board extends JPanel {
 
             if (e.getButton() == MouseEvent.BUTTON3) {
                 return;
-            } else {
-                if (pressedCell.isVisible()) {
-                    //Remove player from the original place
+            } else if (!pressedCell.isVisible()) {
+            	return;
+            } else if (pressedCell.isVisible()) {
+                	playerCell.setPlayer(false);
                 	pressedCell.setPlayer(true);	//Move player here
-                	//Set new visible area
-                }
-                else {
-                	return;
-                }
-                
-                if (pressedCell.isVisible() && pressedCell.isBonus()) {
-                	player.setEnergy(player.getEnergy() + 3);
-                }
-                
-                else if (pressedCell.isVisible() && pressedCell.isMinus()) {
-                	player.setEnergy(player.getEnergy() - 3);
-                }
-                
-                else if (pressedCell.isVisible() && pressedCell.isItalianChef()) {
-                	if (player.getCookingSkills() > level.getItalianChefSkill()) {
-                		player.setCookingSkills(player.getCookingSkills() + 1);
-                	}
-                	else {
-                		player.setCookingSkills(player.getCookingSkills() - 1);
-                	}
-                }
-                
-                else if (pressedCell.isVisible() && pressedCell.isChineseChef()) {
-                	if (player.getChopping() > level.getChineseChefSkill()) {
-                		player.setChopping(player.getChopping() + 1);
-                	}
-                	else {
-                		player.setChopping(player.getChopping() - 1);
-                	}
-                }
-                
-                else if (pressedCell.isVisible() && pressedCell.isGoal()) {
-                	//Player's win, game over!
-                	//Calculate score
-                	//Update highscore
-                }
-                
-                else {
-                	return;
-                }
+                	playerCell = pressedCell;
+                	energy--;
+                	
+                    if (pressedCell.isBonus()) {
+                    	player.setEnergy(energy + 3);
+                    }
+                    
+                    else if (pressedCell.isMinus()) {
+                    	player.setEnergy(energy - 3);
+                    }
+                    
+                    else if (pressedCell.isItalianChef()) {
+                    	if (player.getCookingSkills() >= level.getItalianChefSkill()) {
+                    		player.setCookingSkills(player.getCookingSkills() + 1);
+                    	}
+                    	else {
+                    		player.setCookingSkills(player.getCookingSkills() - 1);
+                    	}
+                    }
+                    
+                    else if (pressedCell.isChineseChef()) {
+                    	if (player.getChopping() >= level.getChineseChefSkill()) {
+                    		player.setChopping(player.getChopping() + 1);
+                    	}
+                    	else {
+                    		player.setChopping(player.getChopping() - 1);
+                    	}
+                    }
+                    
+                    else if (pressedCell.isGoal()) {
+                    	pressedCell.setPlayer(true);
+                    }
+                    
+                    else {
+                    	return;
+                    }
 
-                doRepaint = true;
-            }
+                    doRepaint = true;
+                }
 
             if (doRepaint) {
                 repaint();
