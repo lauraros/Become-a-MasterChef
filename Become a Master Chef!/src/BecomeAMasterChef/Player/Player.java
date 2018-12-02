@@ -1,31 +1,48 @@
 package BecomeAMasterChef.Player;
 
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.List;
-import java.util.Scanner;
-
 public class Player {
+	/*Player attributes*/
     public String playerName;
-    private int totalScore;
-    private int ingredients = 3;
-    private boolean isAlive = true;
-    private List<Object> objects;
-    //Deque<Cell> path = new ArrayDeque<Cell>();
-    //Cell currentPosition=null;//= path.peekLast();
-    //Cell previousPosition=null;//= path.peekLast();
-    
+    private int energy = 0;
+    //private int ingredients = 3;
+	private int cookingTalent;
+	private int chopping;
+    private int totalScore;    
+    private boolean isAlive = false;
+  
     public Player() {
-		//Player player2= new Player();
-		Scanner input1= new Scanner(System.in);
-		System.out.println("What is your name?");
-		String player1Name = input1.nextLine();
-		if (player1Name.equals("")) {
-			setPlayerName("Player");
-		}else
-		setPlayerName(player1Name);
+		setPlayerName("Player");
+		setCookingTalent(5);
+		setChopping();
+		setEnergy(energy);//from level, board or Bamc?
+		giveBirth();
     }
+    
+    public Player(String playerName) {
+		setPlayerName(playerName);
+		setCookingTalent(5);
+		setChopping();
+		setEnergy(energy);//from level, board or Bamc?
+		giveBirth();
+    }
+    
+    public Player(String playerName, int cookingTalent) {
+		setPlayerName(playerName);
+		setCookingTalent(cookingTalent);
+		setChopping();
+		setEnergy(energy);//from level, board or Bamc?
+		giveBirth();
+    }
+    
+    public Player(String playerName, int cookingTalent, int energy) {
+		setPlayerName(playerName);
+		setCookingTalent(cookingTalent);
+		setChopping();
+		setEnergy(energy);//from level, board or Bamc?
+		giveBirth();
+    }
+    
     public void setPlayerName(String name){
         this.playerName = name;
     }
@@ -34,59 +51,64 @@ public class Player {
         return this.playerName;
     }
 
-    public int getIngredients(){
-        return ingredients ;
-    }
-
-    public void loseOneLife(){
-        ingredients -= 1 ;
+	public void setEnergy(int energy) {
+		this.energy = energy;
+	}
+	
+	public int getEnergy() {
+		return energy;
+	}
+	
+	public void setCookingTalent(int cookingTalent) {
+		this.cookingTalent = cookingTalent;
+	}
+	
+	public int getCookingTalent() {
+		return cookingTalent;
+	}
+	
+	public void setChopping() {
+		this.chopping = 10 - cookingTalent;
+	}
+	
+	public int getChopping() {
+		return chopping;
+	}	
+	
+	public void setTotalScore(int totalScore) {
+		this.totalScore = totalScore;
+	}	
+	
+	public int getTotalScore() {
+		return totalScore;
+	}	
+	
+    public void loseEnergy(int lostEnergy){
+        this.energy -= lostEnergy ;
     }
     
-    public void addOneLife(){
-        ingredients += 1;
+    public void addEnergy(int gainedEnergy){
+    	this.energy += gainedEnergy;
     }
     	
-    public void loseIngredients(int lIngredients){
-        ingredients -= lIngredients ;
+    public void loseScore(int lostScore){
+    	this.totalScore -= lostScore ;
     }
     
-    public void addIngredients(int wIngredients){
-        ingredients += wIngredients;
+    public void addScore(int gainedScore){
+    	this.totalScore += gainedScore;
     }
-    /*public void setCurrentPosition(Cell cell){
-        currentPosition=cell;
-    }
-    public void setPreviousPosition(Cell cell){
-        previousPosition=cell;
-    }
-    public Cell getCurrentPosition(){
-        return currentPosition;
-    }
-    public Cell getPreviousPosition(){
-        return previousPosition;
-    }
-    public int getTotalScore(){
-        return totalScore;
-    }*/
 
-    public void addOneScore(){
-        totalScore += 1;  	
-	}
-    public void addScore(int score){
-        totalScore += score;
+    public void setIsAlive(boolean life) {
+    	this.isAlive = life;
     }
-    public List<Object> getObjects(){
-        return this.objects;
-	}
-    /*public void Object(int score){
-        totalScore += score;
-    }*/
 
-	public void printRecap() {
-		//String recap="You have "+this.getIngredients()+" ingredients and a score of "+this.getTotalScore()+".";
-		//System.out.println(recap);
-	}
-
-
+    public void giveBirth() {
+    	this.isAlive = true;
+    }
+    
+    public void killPlayer() {
+    	this.isAlive = false;
+    }
 }
 
