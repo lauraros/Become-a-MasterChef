@@ -39,6 +39,10 @@ public class Gamer {
 		return chopping;
 	}
 	
+	public void setHighScore(int highscore) {
+		this.highscore = highscore;
+	}
+	
 	public int getHighScore() {
 		return highscore;
 	}

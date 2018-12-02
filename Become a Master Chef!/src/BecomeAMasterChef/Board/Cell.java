@@ -3,6 +3,7 @@ package BecomeAMasterChef.Board;
 public class Cell {
     private boolean player;
     private boolean cover;			//cell is invisible
+    private boolean empty;			//cell is empty
     private boolean goal;			//MasterChef Title
     private boolean bonus;			//bonus is an event that increases energy
     private boolean minus;			//bonus is an event that decreases energy
@@ -25,6 +26,17 @@ public class Cell {
     
     public boolean isPlayer() {
     	return this.player;
+    }
+    
+    public boolean isEmpty() {
+    	if (!this.isPlayer() && !this.isGoal() && !this.isBonus() && !this.isMinus() && 
+    	!this.isChineseChef() && !this.isItalianChef()) {
+    		empty = true;
+    	}
+    	else {
+    		empty = false;
+    	}
+    	return empty;
     }
     
     public void setVisible(boolean b) {
@@ -74,9 +86,4 @@ public class Cell {
     public boolean isChineseChef() {
     	return this.chinese_chef;
     }
-    
-    public boolean isAroundPlayer() {
-    	
-    }
-
 }
