@@ -7,8 +7,8 @@ import javax.swing.JLabel;
 import BecomeAMasterChef.Board.*;
 
 public class Game extends JFrame{
-	private final int WIDTH = 250;
-    private final int HEIGHT = 290;
+	private final int WIDTH = 642;
+    private final int HEIGHT = 690;
 
     private JLabel statusbar;
 

@@ -16,45 +16,45 @@ import javax.swing.JPanel;
 
 public class Board extends JPanel {
     // Constants
-    private final int CELL_SIZE  = 50;
+    private final int CELL_SIZE  = 40;
     private final int NUM_IMAGES = 8;
 
-    private final int IMAGE_GOAL       		= 0;
-    private final int IMAGE_ITALIAN_CHEF    = 1;
-    private final int IMAGE_CHINESE_CHEF    = 2;
-    private final int IMAGE_BONUS 			= 3;
-    private final int IMAGE_MINUS       	= 4;
+    private final int IMAGE_COVER       	= 0;
+    private final int IMAGE_BONUS 			= 1;
+    private final int IMAGE_MINUS       	= 2;
+    private final int IMAGE_ITALIAN_CHEF    = 3;
+    private final int IMAGE_CHINESE_CHEF    = 4;
     private final int IMAGE_PLAYER     		= 5;
-    private final int IMAGE_COVER		    = 6;
+    private final int IMAGE_GOAL		    = 6;
     private final int IMAGE_VISIBLE			= 7;
 
     private JLabel statusBar;
 
     private int num_player = 1;
     private int num_goal = 1;
-    private int num_bonus = 3;
-    private int num_minus = 3;
+    private int num_bonus = 5;
+    private int num_minus = 5;
     private int num_italian_chef = 3;
     private int num_chinese_chef = 3;
 
     private int rows = 16, columns = 16;
-
-    private int energy;
     
     private Cell[][] cells;
-    private Cell playerCell;
+    private int[] playerPos = new int[2];
     private Image[] img;
     private Gamer player;
     private Level level;
+    private int highscore;
 
     private boolean inGame;
 
     public Board(JLabel statusBar) {
         this.statusBar = statusBar;
 
+        //save images in an array
         this.img = new Image[NUM_IMAGES];
         for (int i = 0; i < NUM_IMAGES; i++) {
-            String path = "img/g" + i + ".tiff";
+            String path = "img/j" + i + ".jpg";
             img[i] = new ImageIcon(path).getImage();
         }
 
@@ -75,85 +75,107 @@ public class Board extends JPanel {
 
     public void newGame () {
         Random random = new Random();
-        player = new Gamer("Fihser");		//import player
+        player = new Gamer("Fisher");		//import player
         level = new Level();				//import level
-        energy = level.getInitEnergy();
-        player.setEnergy(energy);
+        player.setEnergy(level.getInitEnergy());
+        highscore = 0;
         
         this.inGame = true;
 
         this.initCells();
-        this.statusBar.setText(Integer.toString(this.player.getEnergy()));
+        this.statusBar.setText("Player: " + this.player.getPlayername()
+        						+ "      Energy: " + Integer.toString(this.player.getEnergy())
+        						+ "      Cooking Skills: " + Integer.toString(this.player.getCookingSkills())
+        						+ "      Chopping: " + Integer.toString(this.player.getChopping())
+        						+ "          High Score: " + Integer.toString(highscore));
 
-        while (num_player >= 0) {
+        //Assign player to a random place on board
+        while (num_player > 0) {
             int randX = random.nextInt(this.rows);
             int randY = random.nextInt(this.columns);
 
-            playerCell = this.cells[randX][randY];
-            if (playerCell.isEmpty()) {
-                playerCell.setPlayer(true);
+            Cell cell = this.cells[randX][randY];
+            if (cell.isEmpty()) {
+                cell.setPlayer(true);
+                playerPos[0] = randX;
+                playerPos[1] = randY;
+                System.out.println("init player: " + playerPos[0] + ", " + playerPos[1]);
                 num_player--;
             }
         }
         
-        while (num_goal >= 0) {
+        //Assign goal to a random place on board
+        while (num_goal > 0) {
             int randX = random.nextInt(this.rows);
             int randY = random.nextInt(this.columns);
 
             Cell cell = this.cells[randX][randY];
             if (cell.isEmpty()) {
-                cell.setGoal();
+                cell.setGoal(true);
+                System.out.println("init goal: " + randX + ", " + randY);
                 num_goal--;
             }
         }
-        
-        while (num_bonus >= 0) {
+      
+        //Assign bonus to random places on board
+        while (num_bonus > 0) {
             int randX = random.nextInt(this.rows);
             int randY = random.nextInt(this.columns);
 
             Cell cell = this.cells[randX][randY];
             if (cell.isEmpty()) {
-                cell.setBonus();
+                cell.setBonus(true);
                 num_bonus--;
             }
         }
-        
-        while (num_minus >= 0) {
+      
+        //Assign minus to random places on board
+        while (num_minus > 0) {
             int randX = random.nextInt(this.rows);
             int randY = random.nextInt(this.columns);
 
             Cell cell = this.cells[randX][randY];
             if (cell.isEmpty()) {
-                cell.setMinus();
+                cell.setMinus(true);
                 num_minus--;
             }
         }
 
-        while (num_italian_chef >= 0) {
+        //Assign competitor_1 to random places on board
+        while (num_italian_chef > 0) {
             int randX = random.nextInt(this.rows);
             int randY = random.nextInt(this.columns);
 
             Cell cell = this.cells[randX][randY];
             if (cell.isEmpty()) {
-                cell.setItalianChef();
+                cell.setItalianChef(true);
                 num_italian_chef--;
             }
         }
         
-        while (num_chinese_chef >= 0) {
+        //Assign competitor_2 to random places on board
+        while (num_chinese_chef > 0) {
             int randX = random.nextInt(this.rows);
             int randY = random.nextInt(this.columns);
 
             Cell cell = this.cells[randX][randY];
             if (cell.isEmpty()) {
-                cell.setChineseChef();
+                cell.setChineseChef(true);
                 num_chinese_chef--;
             }
         }   
     }
 
+    //print images on board
     public void paint(Graphics g) {
-        int highscore = 0;
+    	boolean gamewin = false;
+    	int score;
+    	
+    	this.statusBar.setText("Player: " + this.player.getPlayername()
+		+ "      Energy: " + Integer.toString(this.player.getEnergy())
+		+ "      Cooking Skills: " + Integer.toString(this.player.getCookingSkills())
+		+ "      Chopping: " + Integer.toString(this.player.getChopping())
+		+ "          High Score: " + Integer.toString(highscore));
 
         for (int i = 0; i < this.rows; i++) {
             for (int j = 0; j < this.columns; j++) {
@@ -169,16 +191,21 @@ public class Board extends JPanel {
                 
             	if (cell.isGoal() && cell.isPlayer() && player.getEnergy() >= 0) {
                     inGame = false;
-                    statusBar.setText("Game Won");
-                    highscore = player.getEnergy() + player.getChopping() + player.getCookingSkills();
-                    if (highscore > player.getHighScore()) {
-                    	player.setHighScore(highscore);
+                    gamewin = true;
+                    score = player.getEnergy() + player.getChopping() + player.getCookingSkills();
+                    statusBar.setText("Game Won! Your score is: " + score
+                    				    + "        Current Highscore: " + highscore);
+                    if (score > highscore) {
+                    	highscore = score;
                     }
-                } else if (!inGame) {
+                } else if (!inGame && !gamewin) {
                     statusBar.setText("You're out of energy. Game Lost!");
                 }
 
             	if (isAroundPlayer(i,j)) {
+            		cell.setVisible(true);
+            	}
+            	else if (i == playerPos[0] && j == playerPos[1]) {
             		cell.setVisible(true);
             	}
             	else {
@@ -289,17 +316,23 @@ public class Board extends JPanel {
             } else if (!pressedCell.isVisible()) {
             	return;
             } else if (pressedCell.isVisible()) {
-                	playerCell.setPlayer(false);
-                	pressedCell.setPlayer(true);	//Move player here
-                	playerCell = pressedCell;
-                	energy--;
+            		//Move player position
+            		cells[playerPos[0]][playerPos[1]].setPlayer(false);
+            		playerPos[0] = pressedRow;
+            		playerPos[1] = pressedCol;
+            		cells[playerPos[0]][playerPos[1]].setPlayer(true);
+
+                	//Consume energy
+            		player.setEnergy(player.getEnergy() - 1);
                 	
                     if (pressedCell.isBonus()) {
-                    	player.setEnergy(energy + 3);
+                    	player.setEnergy(player.getEnergy() + 4);
+                    	cells[pressedRow][pressedCol].setBonus(false);
                     }
                     
                     else if (pressedCell.isMinus()) {
-                    	player.setEnergy(energy - 3);
+                    	player.setEnergy(player.getEnergy() - 2);
+                    	cells[pressedRow][pressedCol].setMinus(false);
                     }
                     
                     else if (pressedCell.isItalianChef()) {
@@ -309,6 +342,7 @@ public class Board extends JPanel {
                     	else {
                     		player.setCookingSkills(player.getCookingSkills() - 1);
                     	}
+                    	cells[pressedRow][pressedCol].setItalianChef(false);
                     }
                     
                     else if (pressedCell.isChineseChef()) {
@@ -318,21 +352,14 @@ public class Board extends JPanel {
                     	else {
                     		player.setChopping(player.getChopping() - 1);
                     	}
-                    }
-                    
-                    else if (pressedCell.isGoal()) {
-                    	pressedCell.setPlayer(true);
-                    }
-                    
-                    else {
-                    	return;
+                    	cells[pressedRow][pressedCol].setChineseChef(false);
                     }
 
                     doRepaint = true;
                 }
 
             if (doRepaint) {
-                repaint();
+                repaint(); 
             }
         }
     }
