@@ -8,11 +8,16 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import java.util.Random;
+import java.util.Scanner;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+//import java.io.File;
+//import java.io.IOException;
+//import java.io.PrintWriter;
+import java.io.*;
 
 public class Board extends JPanel {
     // Constants
@@ -42,14 +47,18 @@ public class Board extends JPanel {
     private Cell[][] cells;
     private int[] playerPos = new int[2];
     private Image[] img;
-    private Gamer player;
+    private Player player;
     private Level level;
+    private int score;
     private int highscore;
 
     private boolean inGame;
 
-    public Board(JLabel statusBar) {
+    public Board(JLabel statusBar, String playerName, String level, int cookingSkills) {
         this.statusBar = statusBar;
+        this.level = new Level(level);
+        this.player = new Player(playerName, cookingSkills);
+        this.player.setEnergy(this.level.getInitEnergy());
 
         //save images in an array
         this.img = new Image[NUM_IMAGES];
@@ -75,15 +84,13 @@ public class Board extends JPanel {
 
     public void newGame () {
         Random random = new Random();
-        player = new Gamer("Fisher");		//import player
-        level = new Level();				//import level
-        player.setEnergy(level.getInitEnergy());
-        highscore = 0;
+
+        score = 0;
         
         this.inGame = true;
 
         this.initCells();
-        this.statusBar.setText("Player: " + this.player.getPlayername()
+        this.statusBar.setText("Player: " + this.player.getPlayerName()
         						+ "      Energy: " + Integer.toString(this.player.getEnergy())
         						+ "      Cooking Skills: " + Integer.toString(this.player.getCookingSkills())
         						+ "      Chopping: " + Integer.toString(this.player.getChopping())
@@ -169,9 +176,8 @@ public class Board extends JPanel {
     //print images on board
     public void paint(Graphics g) {
     	boolean gamewin = false;
-    	int score;
     	
-    	this.statusBar.setText("Player: " + this.player.getPlayername()
+    	this.statusBar.setText("Player: " + this.player.getPlayerName()
 		+ "      Energy: " + Integer.toString(this.player.getEnergy())
 		+ "      Cooking Skills: " + Integer.toString(this.player.getCookingSkills())
 		+ "      Chopping: " + Integer.toString(this.player.getChopping())
@@ -192,12 +198,18 @@ public class Board extends JPanel {
             	if (cell.isGoal() && cell.isPlayer() && player.getEnergy() >= 0) {
                     inGame = false;
                     gamewin = true;
-                    score = player.getEnergy() + player.getChopping() + player.getCookingSkills();
-                    statusBar.setText("Game Won! Your score is: " + score
-                    				    + "        Current Highscore: " + highscore);
-                    if (score > highscore) {
-                    	highscore = score;
+                    score = player.getEnergy() + player.getChopping() + player.getCookingSkills() + 1;
+                    updateHighScore();
+                    
+                    if (score > highscore) {    
+                        statusBar.setText("Game won! You now have the new high score of "
+                        					+ score + "! The previous high score was " + highscore + ".");
+                    } else if (score == highscore) {
+                    	statusBar.setText("Game won! You tied the high score of " + score + "!");
+                    } else {
+                    	statusBar.setText("Game won! The all time high score was " + highscore + ".");
                     }
+                    
                 } else if (!inGame && !gamewin) {
                     statusBar.setText("You're out of energy. Game Lost!");
                 }
@@ -362,5 +374,45 @@ public class Board extends JPanel {
                 repaint(); 
             }
         }
+    }
+    
+ // determine the high score
+    
+    private void updateHighScore() {
+    try {
+    	BufferedReader reader = new BufferedReader(new FileReader("score.txt"));
+        String line = reader.readLine();
+        while (line != null)                 // read the score file line by line
+        {
+            try {
+                int score = Integer.parseInt(line.trim());   // parse each line as an int
+                if (score > highscore)                       // and keep track of the largest
+                { 
+                    highscore = score; 
+                }
+            } catch (NumberFormatException e1) {
+                // ignore invalid scores
+                // System.err.println("ignoring invalid score: " + line);
+            }
+            line = reader.readLine();
+        }
+        reader.close();
+
+    } catch (IOException ex) {
+        System.err.println("ERROR reading scores from file");
+        }
+    
+    
+    // append the last score to the end of the file
+    
+	try {
+    BufferedWriter output = new BufferedWriter(new FileWriter("score.txt", true));
+    output.newLine();
+    output.append("" + score);
+    output.close();
+	} catch (IOException ex1) {
+    System.out.printf("ERROR writing score to file: %s\n", ex1);
+    }
+    
     }
 }
