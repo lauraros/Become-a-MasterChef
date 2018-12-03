@@ -12,7 +12,7 @@ public class Game extends JFrame{
 
     private JLabel statusbar;
 
-    public Game() {
+    public Game(String playerName, String level, int cookingSkills) {
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(WIDTH, HEIGHT);
@@ -22,14 +22,17 @@ public class Game extends JFrame{
         statusbar = new JLabel("");
         add(statusbar, BorderLayout.SOUTH);
 
-        add(new Board(statusbar));
+        add(new Board(statusbar, playerName, level, cookingSkills));
 
         setResizable(false);
         setVisible(true);
     }
+}
 
+/*
     public static void main(String[] args) {
         new Game();
     }
 
 }
+*/
