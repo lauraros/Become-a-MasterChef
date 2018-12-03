@@ -1,7 +1,7 @@
 package BecomeAMasterChef;
 
 public class Level {
-	private String levelName;
+	private String levelName="Easy";
 	private int init_energy;								//Initial energy
 	private int italian_chef_skill;							//Italian chef's cooking_skills
 	private int chinese_chef_skill;							//Chinese chef's chopping
@@ -10,7 +10,7 @@ public class Level {
 
 		switch (levelName) {
 		case "Easy": 
-			init_energy = 50;
+			init_energy = 5;
 			italian_chef_skill = 4;
 			chinese_chef_skill = 4;
 			break;
