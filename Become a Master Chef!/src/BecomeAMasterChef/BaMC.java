@@ -29,6 +29,7 @@ public class BaMC{
 		initGUI();
 	}
 
+	// Setup GUI for game entrance
 	private void initGUI() {
 		JFrame frame = new JFrame();
 		frame.setTitle("Become a Master Chef!");
@@ -108,25 +109,29 @@ public class BaMC{
 		frame.pack();
 		frame.setVisible(true);
 		
-        //Process the button press
+        // Process the button press
         startButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
 
-                String playerName = (String)playerNameField.getText();
+               // Get 'player name', 'game level', and 'skill set' from input
+            	String playerName = (String)playerNameField.getText();
                 String level = (String)levelBox.getSelectedItem();
                 int cookingSkills = (Integer)skill1V.getValue();
                 
+                // Pass variables to Game
             	new JLabel(frame.getTitle());
                	new Game(playerName, level, cookingSkills);
             }
         });
         
+        // Make sure the 2 skill settings adds up to exactly 10 before start (Cooking Skills spinner)
         skill1V.addChangeListener(new ChangeListener() {
 
             @Override
             public void stateChanged(ChangeEvent e) {
                 JSpinner s = (JSpinner) e.getSource();
-                System.out.println((int)s.getValue());
+                //System.out.println((int)s.getValue());
+                
                 if ((int)skill1V.getValue() + (int)skill2V.getValue() != 10) {
                 	startButton.setEnabled(false);
                 }
@@ -134,24 +139,24 @@ public class BaMC{
             }
         });
         
+        // Make sure the 2 skill settings adds up to exactly 10 before start (Chopping spinner)
         skill2V.addChangeListener(new ChangeListener() {
 
             @Override
             public void stateChanged(ChangeEvent e) {
                 JSpinner s = (JSpinner) e.getSource();
-                System.out.println(s.getValue().toString());
+                //System.out.println(s.getValue().toString());
+                
                 if ((int)skill1V.getValue() + (int)skill2V.getValue() != 10) {
                 	startButton.setEnabled(false);
                 }
                 else startButton.setEnabled(true);
             }
-        });
-        
-		
+        });		
         }
 
 
-
+	//Game entrance
 	public static void main(String[] args) {
 
 		EventQueue.invokeLater(new Runnable() {

@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import BecomeAMasterChef.Board.*;
 
+// Sets up the game GUI and passes input variables in a new game
 public class Game extends JFrame{
 	private final int WIDTH = 642;
     private final int HEIGHT = 690;

@@ -34,7 +34,15 @@ public class Board extends JPanel {
     private final int IMAGE_VISIBLE			= 7;
 
     private JLabel statusBar;
+    private Player player;
+    private Level level;
+    private Cell[][] cells;
+    private int[] playerPos = new int[2];
+    private Image[] img;
+    private int score;
+    private int highscore;
 
+    // the number of all objects on the board
     private int num_player = 1;
     private int num_goal = 1;
     private int num_bonus = 5;
@@ -43,24 +51,18 @@ public class Board extends JPanel {
     private int num_chinese_chef = 3;
 
     private int rows = 16, columns = 16;
-    
-    private Cell[][] cells;
-    private int[] playerPos = new int[2];
-    private Image[] img;
-    private Player player;
-    private Level level;
-    private int score;
-    private int highscore;
 
     private boolean inGame;
 
     public Board(JLabel statusBar, String playerName, String level, int cookingSkills) {
-        this.statusBar = statusBar;
+        // Game setup from input
+    	this.statusBar = statusBar;
         this.level = new Level(level);
         this.player = new Player(playerName, cookingSkills);
         this.player.setEnergy(this.level.getInitEnergy());
+        updateHighScore();
 
-        //save images in an array
+        // Input images for cell in an array
         this.img = new Image[NUM_IMAGES];
         for (int i = 0; i < NUM_IMAGES; i++) {
             String path = "img/j" + i + ".jpg";
@@ -72,6 +74,7 @@ public class Board extends JPanel {
         this.newGame();
     }
 
+    // Create a matrix for the board layout
     private void initCells () {
         this.cells = new Cell[rows][columns];
 
@@ -82,21 +85,22 @@ public class Board extends JPanel {
         }
     }
 
+    // Start a new game
     public void newGame () {
         Random random = new Random();
-
         score = 0;
         
         this.inGame = true;
-
         this.initCells();
+        
+        // Information of settings are shown in the statusBar below the board
         this.statusBar.setText("Player: " + this.player.getPlayerName()
         						+ "      Energy: " + Integer.toString(this.player.getEnergy())
         						+ "      Cooking Skills: " + Integer.toString(this.player.getCookingSkills())
         						+ "      Chopping: " + Integer.toString(this.player.getChopping())
         						+ "          High Score: " + Integer.toString(highscore));
 
-        //Assign player to a random place on board
+        // Assign player to a random place on board and remember player's position
         while (num_player > 0) {
             int randX = random.nextInt(this.rows);
             int randY = random.nextInt(this.columns);
@@ -106,12 +110,12 @@ public class Board extends JPanel {
                 cell.setPlayer(true);
                 playerPos[0] = randX;
                 playerPos[1] = randY;
-                System.out.println("init player: " + playerPos[0] + ", " + playerPos[1]);
+                //System.out.println("init player: " + playerPos[0] + ", " + playerPos[1]);
                 num_player--;
             }
         }
         
-        //Assign goal to a random place on board
+        // Assign goal to a random place on board
         while (num_goal > 0) {
             int randX = random.nextInt(this.rows);
             int randY = random.nextInt(this.columns);
@@ -119,12 +123,12 @@ public class Board extends JPanel {
             Cell cell = this.cells[randX][randY];
             if (cell.isEmpty()) {
                 cell.setGoal(true);
-                System.out.println("init goal: " + randX + ", " + randY);
+                //System.out.println("init goal: " + randX + ", " + randY);
                 num_goal--;
             }
         }
       
-        //Assign bonus to random places on board
+        // Assign bonus to random places on board
         while (num_bonus > 0) {
             int randX = random.nextInt(this.rows);
             int randY = random.nextInt(this.columns);
@@ -136,7 +140,7 @@ public class Board extends JPanel {
             }
         }
       
-        //Assign minus to random places on board
+        // Assign minus to random places on board
         while (num_minus > 0) {
             int randX = random.nextInt(this.rows);
             int randY = random.nextInt(this.columns);
@@ -148,7 +152,7 @@ public class Board extends JPanel {
             }
         }
 
-        //Assign competitor_1 to random places on board
+        // Assign competitor_1 (Italian chef: cooking skills) to random places on board
         while (num_italian_chef > 0) {
             int randX = random.nextInt(this.rows);
             int randY = random.nextInt(this.columns);
@@ -160,7 +164,7 @@ public class Board extends JPanel {
             }
         }
         
-        //Assign competitor_2 to random places on board
+        // Assign competitor_2 (Chinese chef: chopping) to random places on board
         while (num_chinese_chef > 0) {
             int randX = random.nextInt(this.rows);
             int randY = random.nextInt(this.columns);
@@ -173,10 +177,11 @@ public class Board extends JPanel {
         }   
     }
 
-    //print images on board
+    // Print images in each cell on the board
     public void paint(Graphics g) {
     	boolean gamewin = false;
     	
+    	// Update status bar information
     	this.statusBar.setText("Player: " + this.player.getPlayerName()
 		+ "      Energy: " + Integer.toString(this.player.getEnergy())
 		+ "      Cooking Skills: " + Integer.toString(this.player.getCookingSkills())
@@ -188,13 +193,17 @@ public class Board extends JPanel {
                 Cell cell = this.cells[i][j];
                 int imageType;
                 int xPosition, yPosition;
+                xPosition = (j * CELL_SIZE);
+                yPosition = (i * CELL_SIZE);
 
+                // Game is over whenever player is out of energy
                 if (inGame) {	
                     if (player.getEnergy() == 0) {
                         inGame = false;
                     }
                 }
                 
+                // Game is won and over if player reaches the goal before consuming up energy
             	if (cell.isGoal() && cell.isPlayer() && player.getEnergy() >= 0) {
                     inGame = false;
                     gamewin = true;
@@ -207,16 +216,21 @@ public class Board extends JPanel {
                     } else if (score == highscore) {
                     	statusBar.setText("Game won! You tied the high score of " + score + "!");
                     } else {
-                    	statusBar.setText("Game won! The all time high score was " + highscore + ".");
+                    	statusBar.setText("Game won! Your score is " + score
+                    						+ ". The all time high score was " + highscore + ".");
                     }
-                    
+                
+                // Game is lost and over if player is out of energy and not winning the game
                 } else if (!inGame && !gamewin) {
                     statusBar.setText("You're out of energy. Game Lost!");
                 }
 
+            	// Set cells visible around the player
             	if (isAroundPlayer(i,j)) {
             		cell.setVisible(true);
             	}
+            	
+            	// Set the cell visible where the player is at
             	else if (i == playerPos[0] && j == playerPos[1]) {
             		cell.setVisible(true);
             	}
@@ -224,16 +238,16 @@ public class Board extends JPanel {
             		cell.setVisible(false);
             	}
             	
+            	// Decide which image to print for each cell
             	imageType = this.decideImageType(cell);
 
-                xPosition = (j * CELL_SIZE);
-                yPosition = (i * CELL_SIZE);
-
-                g.drawImage(img[imageType], xPosition, yPosition, this);
+                // Draw images
+            	g.drawImage(img[imageType], xPosition, yPosition, this);
             }
         }
     }
 
+    // Decide which image to print for each cell
     private int decideImageType(Cell cell) {
         int imageType = 0;
     	
@@ -241,27 +255,21 @@ public class Board extends JPanel {
 	        if (cell.isEmpty()) {
 	        	imageType = IMAGE_VISIBLE;
 	        }
-	        
 	        else if (cell.isPlayer()) {
 	    		imageType = IMAGE_PLAYER;
 	    	}
-	    	
 	    	else if (cell.isGoal()) {
 	    		imageType = IMAGE_GOAL;
 	    	}
-	    	
 	    	else if (cell.isBonus()) {
 	    		imageType = IMAGE_BONUS;
 	    	}
-	    	
 	    	else if (cell.isMinus()) {
 	    		imageType = IMAGE_MINUS;
 	    	}
-	    	
 	    	else if (cell.isChineseChef()) {
 	    		imageType = IMAGE_CHINESE_CHEF;
 	    	}
-	    	
 	    	else if (cell.isItalianChef()) {
 	    		imageType = IMAGE_ITALIAN_CHEF;
 	    	}
@@ -274,6 +282,7 @@ public class Board extends JPanel {
         return imageType;
     }
 
+    // Return if a cell for a certain position is around the player
     private boolean isAroundPlayer(int x, int y) {
         boolean around_player = false;
 
@@ -302,7 +311,7 @@ public class Board extends JPanel {
         return around_player;
     }
 
-
+    // Process the button press
     class MinesAdapter extends MouseAdapter {
         public void mousePressed(MouseEvent e) {
             int pressedCol = e.getX() / CELL_SIZE;
@@ -310,12 +319,8 @@ public class Board extends JPanel {
 
             boolean doRepaint = false;
             Cell pressedCell;
- 
-            if (!inGame) {
-                newGame();
-                repaint();
-            }
 
+            // Out of bounds
             if ((pressedCol < 0 || pressedCol >= columns)
                 || (pressedRow < 0 || pressedRow >= rows)) {
                 return;
@@ -323,51 +328,55 @@ public class Board extends JPanel {
 
             pressedCell = cells[pressedRow][pressedCol];
 
+            // Reaction to only left click on visible cells
             if (e.getButton() == MouseEvent.BUTTON3) {
                 return;
             } else if (!pressedCell.isVisible()) {
             	return;
-            } else if (pressedCell.isVisible()) {
-            		//Move player position
+            } else if (inGame && pressedCell.isVisible()) {
+            		// Move player position to where clicked
             		cells[playerPos[0]][playerPos[1]].setPlayer(false);
             		playerPos[0] = pressedRow;
             		playerPos[1] = pressedCol;
             		cells[playerPos[0]][playerPos[1]].setPlayer(true);
 
-                	//Consume energy
+                	// Consume energy by 1 for each move
             		player.setEnergy(player.getEnergy() - 1);
                 	
-                    if (pressedCell.isBonus()) {
-                    	player.setEnergy(player.getEnergy() + 4);
+                    // Interaction with events on the board accordingly
+            		// Events should vanish afterwards
+            		if (pressedCell.isBonus()) {
+                    	player.setEnergy(player.getEnergy() + 3 + 1);
                     	cells[pressedRow][pressedCol].setBonus(false);
                     }
                     
                     else if (pressedCell.isMinus()) {
-                    	player.setEnergy(player.getEnergy() - 2);
+                    	player.setEnergy(player.getEnergy() - 3 + 1);
                     	cells[pressedRow][pressedCol].setMinus(false);
                     }
                     
                     else if (pressedCell.isItalianChef()) {
                     	if (player.getCookingSkills() >= level.getItalianChefSkill()) {
-                    		player.setCookingSkills(player.getCookingSkills() + 1);
+                    		player.setCookingSkills(player.getCookingSkills() + 2);
                     	}
                     	else {
-                    		player.setCookingSkills(player.getCookingSkills() - 1);
+                    		player.setCookingSkills(player.getCookingSkills() - 2);
                     	}
                     	cells[pressedRow][pressedCol].setItalianChef(false);
                     }
                     
                     else if (pressedCell.isChineseChef()) {
                     	if (player.getChopping() >= level.getChineseChefSkill()) {
-                    		player.setChopping(player.getChopping() + 1);
+                    		player.setChopping(player.getChopping() + 2);
                     	}
                     	else {
-                    		player.setChopping(player.getChopping() - 1);
+                    		player.setChopping(player.getChopping() - 2);
                     	}
                     	cells[pressedRow][pressedCol].setChineseChef(false);
                     }
 
-                    doRepaint = true;
+                    // Repaint the board
+            		doRepaint = true;
                 }
 
             if (doRepaint) {
@@ -376,13 +385,14 @@ public class Board extends JPanel {
         }
     }
     
- // determine the high score
-    
+    // Record and update scores in a text file
     private void updateHighScore() {
-    try {
+    
+    	// Read the current high score
+    	try {
     	BufferedReader reader = new BufferedReader(new FileReader("score.txt"));
         String line = reader.readLine();
-        while (line != null)                 // read the score file line by line
+        while (line != null)		// read the score file line by line
         {
             try {
                 int score = Integer.parseInt(line.trim());   // parse each line as an int
@@ -401,18 +411,15 @@ public class Board extends JPanel {
     } catch (IOException ex) {
         System.err.println("ERROR reading scores from file");
         }
-    
-    
-    // append the last score to the end of the file
-    
-	try {
-    BufferedWriter output = new BufferedWriter(new FileWriter("score.txt", true));
-    output.newLine();
-    output.append("" + score);
-    output.close();
-	} catch (IOException ex1) {
-    System.out.printf("ERROR writing score to file: %s\n", ex1);
-    }
-    
+
+    	// Append the last score to the end of the file
+		try {
+	    BufferedWriter output = new BufferedWriter(new FileWriter("score.txt", true));
+	    output.newLine();
+	    output.append("" + score);
+	    output.close();
+		} catch (IOException ex1) {
+	    System.out.printf("ERROR writing score to file: %s\n", ex1);
+	    }
     }
 }
