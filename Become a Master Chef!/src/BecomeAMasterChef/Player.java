@@ -1,5 +1,6 @@
 package BecomeAMasterChef;
 
+// An player object saves its name, energy value, and skill sets
 public class Player {
 	private String playerName;
 	private int energy;

@@ -1,5 +1,6 @@
 package BecomeAMasterChef;
 
+//An level object decides the initial settings of player's energy and opponents skill sets
 public class Level {
 	private String levelName;
 	private int init_energy;								//Initial energy
