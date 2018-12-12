@@ -31,12 +31,13 @@ public class BaMC{
 
 	// Setup GUI for game entrance
 	private void initGUI() {
+		// Settings for window frame
 		JFrame frame = new JFrame();
 		frame.setTitle("Become a Master Chef!");
 		frame.setBounds(100, 100, 360, 240);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
-		
+		// Creating a panel for main Game settings
 		JPanel mainPanel = new JPanel();
 		frame.getContentPane().add(mainPanel);
 		mainPanel.setLayout(new GridLayout(5, 2, 0, 0));
@@ -67,17 +68,18 @@ public class BaMC{
 		levelLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		pSettings.add(levelLabel);
 		
-		JComboBox levelBox = new JComboBox();
+		JComboBox<String> levelBox = new JComboBox<>();
 		levelBox.setBounds(200, 20, 120, 19);
 		levelBox.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
-		levelBox.setModel(new DefaultComboBoxModel(new String[] {"Easy", "Medium", "Hard", "Hardest"}));
+		levelBox.setModel(new DefaultComboBoxModel<>(new String[] {"Easy", "Medium", "Hard", "Hardest"}));
 		pSettings.add(levelBox);
 		
-		JLabel creditsLabel = new JLabel("<html><br>Choose Your Skill Balance <br>(Total 10 Points)</html>");
+		JLabel creditsLabel = new JLabel("<html><br>Choose Your Skills Balance <br>(10 Total Credits)</html>");
 		creditsLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		creditsLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
 		mainPanel.add(creditsLabel);
 		
+		// Creating a separate Panel for skills settings for the game
 		JPanel pSkills = new JPanel();
 		mainPanel.add(pSkills);
 		FlowLayout fl_pSkills = new FlowLayout(FlowLayout.CENTER, 2, 2);
@@ -88,28 +90,49 @@ public class BaMC{
 		Skill1Label.setFont(new Font("Tahoma", Font.BOLD, 13));
 		pSkills.add(Skill1Label);
 		
-		JSpinner skill1V = new JSpinner();
-		skill1V.setModel(new SpinnerNumberModel(5, 0, 10, 1));
+		SpinnerNumberModel skill1model = new SpinnerNumberModel( 5, 0, 10, 1 );
+		SpinnerNumberModel skill2model = new SpinnerNumberModel( 5, 0, 10, 1 );
+		
+		JSpinner skill1V = new JSpinner( skill1model );
+		JSpinner skill2V = new JSpinner( skill2model );
 		pSkills.add(skill1V);
+		pSkills.add(skill2V);
 		
 		JLabel Skill2Label = new JLabel("Chopping");
 		Skill2Label.setForeground(new Color(0, 128, 128));
 		Skill2Label.setFont(new Font("Tahoma", Font.BOLD, 13));
 		pSkills.add(Skill2Label);
 		
-		JSpinner skill2V = new JSpinner();
-		skill2V.setModel(new SpinnerNumberModel(5, 0, 10, 1));
-		pSkills.add(skill2V);
+		// Add a Listener to both spinners so that their value is interdependent
+		skill1model.addChangeListener(new ChangeListener(){
+		public void stateChanged(ChangeEvent e){
+			  SpinnerNumberModel model = (SpinnerNumberModel)e.getSource();
+			  Integer value = (Integer)model.getValue();
+			  skill2model.setMinimum(0 );
+			  skill2model.setMaximum(10);
+			  skill2model.setValue(10-value);
+			}
+		});
+		skill2model.addChangeListener(new ChangeListener(){
+		public void stateChanged(ChangeEvent e){
+			  SpinnerNumberModel model = (SpinnerNumberModel)e.getSource();
+			  Integer value = (Integer)model.getValue();
+			  skill1model.setMinimum(0 );
+			  skill1model.setMaximum( 10 );
+			  skill1model.setValue(10-value);
+			}
+		});	
 		
 		JButton startButton = new JButton("Start");
 		startButton.setFont(new Font("Tahoma", Font.BOLD, 14));
 		startButton.setForeground(new Color(0, 0, 205));
 		mainPanel.add(startButton);
-
+		startButton.setEnabled(true);
+		
 		frame.pack();
 		frame.setVisible(true);
 		
-        // Process the button press
+        // Add a Listener to the 'start' button to start the game
         startButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
 
@@ -118,47 +141,16 @@ public class BaMC{
                 String level = (String)levelBox.getSelectedItem();
                 int cookingSkills = (Integer)skill1V.getValue();
                 
-                // Pass variables to Game
+                // Creating a new game with input values as settings
             	new JLabel(frame.getTitle());
                	new Game(playerName, level, cookingSkills);
             }
         });
-        
-        // Make sure the 2 skill settings adds up to exactly 10 before start (Cooking Skills spinner)
-        skill1V.addChangeListener(new ChangeListener() {
-
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                JSpinner s = (JSpinner) e.getSource();
-                //System.out.println((int)s.getValue());
-                
-                if ((int)skill1V.getValue() + (int)skill2V.getValue() != 10) {
-                	startButton.setEnabled(false);
-                }
-                else startButton.setEnabled(true);
-            }
-        });
-        
-        // Make sure the 2 skill settings adds up to exactly 10 before start (Chopping spinner)
-        skill2V.addChangeListener(new ChangeListener() {
-
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                JSpinner s = (JSpinner) e.getSource();
-                //System.out.println(s.getValue().toString());
-                
-                if ((int)skill1V.getValue() + (int)skill2V.getValue() != 10) {
-                	startButton.setEnabled(false);
-                }
-                else startButton.setEnabled(true);
-            }
-        });		
         }
 
 
 	//Game entrance
 	public static void main(String[] args) {
-
 		EventQueue.invokeLater(new Runnable() {
             public void run() {
             	try {
