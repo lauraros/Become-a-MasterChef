@@ -1,18 +1,24 @@
 package BecomeAMasterChef;
 
-public class Gamer {
-	private String playername;
+// An player object saves its name, energy value, and skill sets
+public class Player {
+	private String playerName;
 	private int energy;
 	private int cooking_skills;
-	private int chopping = 10 - cooking_skills;
-	private int highscore = 0;
+	private int chopping;
 	
-	public Gamer(String playername) {
-		this.playername = playername;
+	public Player(String playerName, int cookingSkills) {
+		this.playerName = playerName;
+		this.cooking_skills = cookingSkills;
+		this.chopping = 10 - cookingSkills;
 	}
 	
-	public String getPlayername() {
-		return playername;
+	public void setPlayerName(String playerName) {
+		this.playerName = playerName;
+	}
+	
+	public String getPlayerName() {
+		return playerName;
 	}
 	
 	public void setEnergy(int energy) {
@@ -37,9 +43,5 @@ public class Gamer {
 	
 	public int getChopping() {
 		return chopping;
-	}
-	
-	public int getHighScore() {
-		return highscore;
 	}
 }
