@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import BecomeAMasterChef.Board.*;
 
 // Sets up the game GUI and passes input variables in a new game
+@SuppressWarnings("serial")
 public class Game extends JFrame{
 	private final int WIDTH = 642;
     private final int HEIGHT = 690;
@@ -19,7 +20,6 @@ public class Game extends JFrame{
         setSize(WIDTH, HEIGHT);
         setLocationRelativeTo(null);
         setTitle("BecomeAMasterChef");
-
         statusbar = new JLabel("");
         add(statusbar, BorderLayout.SOUTH);
 

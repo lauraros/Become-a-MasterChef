@@ -1,6 +1,7 @@
 package BecomeAMasterChef.Board;
 
 import BecomeAMasterChef.*;
+import BecomeAMasterChef.SoundEffects.SoundEffect;
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -8,17 +9,16 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import java.util.Random;
-import java.util.Scanner;
-
+//import java.util.Scanner;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 //import java.io.File;
 //import java.io.IOException;
 //import java.io.PrintWriter;
 import java.io.*;
 
+@SuppressWarnings("serial")
 public class Board extends JPanel {
     // Constants
     private final int CELL_SIZE  = 40;
@@ -65,12 +65,12 @@ public class Board extends JPanel {
         // Input images for cell in an array
         this.img = new Image[NUM_IMAGES];
         for (int i = 0; i < NUM_IMAGES; i++) {
-            String path = "img/j" + i + ".jpg";
+            String path = "src/img/j" + i + ".jpg";
             img[i] = new ImageIcon(path).getImage();
         }
 
         this.setDoubleBuffered(true);
-        this.addMouseListener(new MinesAdapter());
+        this.addMouseListener(new PathAdapter());
         this.newGame();
     }
 
@@ -207,6 +207,7 @@ public class Board extends JPanel {
             	if (cell.isGoal() && cell.isPlayer() && player.getEnergy() >= 0) {
                     inGame = false;
                     gamewin = true;
+                    SoundEffect.WIN.play();
                     score = player.getEnergy() + player.getChopping() + player.getCookingSkills() + 1;
                     updateHighScore();
                     
@@ -222,6 +223,7 @@ public class Board extends JPanel {
                 
                 // Game is lost and over if player is out of energy and not winning the game
                 } else if (!inGame && !gamewin) {
+                	SoundEffect.LOSE.play();
                     statusBar.setText("You're out of energy. Game Lost!");
                 }
 
@@ -312,7 +314,7 @@ public class Board extends JPanel {
     }
 
     // Process the button press
-    class MinesAdapter extends MouseAdapter {
+    class PathAdapter extends MouseAdapter {
         public void mousePressed(MouseEvent e) {
             int pressedCol = e.getX() / CELL_SIZE;
             int pressedRow = e.getY() / CELL_SIZE;
@@ -346,16 +348,19 @@ public class Board extends JPanel {
                     // Interaction with events on the board accordingly
             		// Events should vanish afterwards
             		if (pressedCell.isBonus()) {
+            			SoundEffect.BONUS.play();
                     	player.setEnergy(player.getEnergy() + 3 + 1);
                     	cells[pressedRow][pressedCol].setBonus(false);
                     }
                     
                     else if (pressedCell.isMinus()) {
+                    	SoundEffect.MINUS.play();
                     	player.setEnergy(player.getEnergy() - 3 + 1);
                     	cells[pressedRow][pressedCol].setMinus(false);
                     }
                     
                     else if (pressedCell.isItalianChef()) {
+                    	SoundEffect.ITALIAN.play();
                     	if (player.getCookingSkills() >= level.getItalianChefSkill()) {
                     		player.setCookingSkills(player.getCookingSkills() + 2);
                     	}
@@ -366,6 +371,7 @@ public class Board extends JPanel {
                     }
                     
                     else if (pressedCell.isChineseChef()) {
+                    	SoundEffect.CHINESE.play();
                     	if (player.getChopping() >= level.getChineseChefSkill()) {
                     		player.setChopping(player.getChopping() + 2);
                     	}
@@ -390,7 +396,7 @@ public class Board extends JPanel {
     
     	// Read the current high score
     	try {
-    	BufferedReader reader = new BufferedReader(new FileReader("score.txt"));
+    	BufferedReader reader = new BufferedReader(new FileReader("src/score.txt"));
         String line = reader.readLine();
         while (line != null)		// read the score file line by line
         {
@@ -409,12 +415,13 @@ public class Board extends JPanel {
         reader.close();
 
     } catch (IOException ex) {
-        System.err.println("ERROR reading scores from file");
-        }
+        System.err.println("ERROR missing file 'src/score.txt'");
+        System.exit(1);    
+    }
 
     	// Append the last score to the end of the file
 		try {
-	    BufferedWriter output = new BufferedWriter(new FileWriter("score.txt", true));
+	    BufferedWriter output = new BufferedWriter(new FileWriter("src/score.txt", true));
 	    output.newLine();
 	    output.append("" + score);
 	    output.close();

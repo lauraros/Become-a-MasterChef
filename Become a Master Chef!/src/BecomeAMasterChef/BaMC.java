@@ -16,6 +16,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import BecomeAMasterChef.SoundEffects.SoundEffect;
+
 import javax.swing.JButton;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -135,6 +138,8 @@ public class BaMC{
         // Add a Listener to the 'start' button to start the game
         startButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
+            	SoundEffect.init();
+            	SoundEffect.CLICKRIGHT.play();
 
                // Get 'player name', 'game level', and 'skill set' from input
             	String playerName = (String)playerNameField.getText();
@@ -144,6 +149,8 @@ public class BaMC{
                 // Creating a new game with input values as settings
             	new JLabel(frame.getTitle());
                	new Game(playerName, level, cookingSkills);
+               	
+               	frame.setVisible(false);
             }
         });
         }
