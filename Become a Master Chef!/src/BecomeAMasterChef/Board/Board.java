@@ -18,6 +18,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
 //import java.io.File;
 //import java.io.IOException;
 //import java.io.PrintWriter;
@@ -70,7 +72,6 @@ public class Board extends JPanel {
     	this.statusBar = pStatus;
     	this.playerNameStatus = new JLabel("");
     	statusBar.add(this.playerNameStatus);
-    	this.playerNameStatus.setHorizontalAlignment(JLabel.LEFT);
     	this.energyStatus = new JLabel("");
     	statusBar.add(this.energyStatus);
     	this.skill1_Status = new JLabel("");
@@ -123,7 +124,7 @@ public class Board extends JPanel {
         						+ "      Chopping: " + Integer.toString(this.player.getChopping())
         						+ "          Best Score: " + Integer.toString(highscore));
         */
-        this.playerNameStatus.setText("<html><br>Player:<br>" + this.player.getPlayerName() + "</html>");
+        this.playerNameStatus.setText("Player:" + this.player.getPlayerName());
         this.skill1_Status.setText("Cooking: " + Integer.toString(this.player.getCookingSkills()));
         this.skill2_Status.setText("Chopping: " + Integer.toString(this.player.getChopping()));
         this.energyStatus.setText("Energy: " + Integer.toString(this.player.getEnergy()));
@@ -215,7 +216,7 @@ public class Board extends JPanel {
 		+ "      Cooking Skills: " + Integer.toString(this.player.getCookingSkills())
 		+ "      Chopping: " + Integer.toString(this.player.getChopping())
 		+ "          High Score: " + Integer.toString(highscore));*/
-        this.playerNameStatus.setText("<html><br>Player:<br>" + this.player.getPlayerName() + "</html>");
+        this.playerNameStatus.setText("Player: " + this.player.getPlayerName());
         this.skill1_Status.setText("Cooking: " + Integer.toString(this.player.getCookingSkills()));
         this.skill2_Status.setText("Chopping: " + Integer.toString(this.player.getChopping()));
         this.energyStatus.setText("Energy: " + Integer.toString(this.player.getEnergy()));

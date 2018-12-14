@@ -14,8 +14,8 @@ import BecomeAMasterChef.SoundEffects.SoundEffect;
 // Sets up the game GUI and passes input variables in a new game
 @SuppressWarnings("serial")
 public class Game extends JFrame{
-	private final int WIDTH = 820;
-    private final int HEIGHT = 690;
+	private final int WIDTH = 648;
+    private final int HEIGHT = 750;
 
     //private JLabel statusbar;
 
@@ -32,8 +32,8 @@ public class Game extends JFrame{
         
 		// Creating a separate Panel for skills settings for the game
 		JPanel pStatus = new JPanel();
-		add(pStatus, BorderLayout.EAST);
-		GridLayout fl_pStatus = new GridLayout(5, 1);
+		add(pStatus, BorderLayout.SOUTH);
+		FlowLayout fl_pStatus = new FlowLayout(FlowLayout.CENTER, 30, 30);
 		
 		pStatus.setLayout(fl_pStatus);
 
