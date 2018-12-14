@@ -38,7 +38,13 @@ public class Board extends JPanel {
     private final int IMAGE_GOAL		    = 6;
     private final int IMAGE_VISIBLE			= 7;
 
-    private JLabel statusBar;
+    private JPanel statusBar;
+    private JLabel playerNameStatus;
+    private JLabel energyStatus;
+    private JLabel skill1_Status;
+    private JLabel skill2_Status;
+    private JLabel bestScore;
+    
     private Player player;
     private Level level;
     private Cell[][] cells;
@@ -59,9 +65,21 @@ public class Board extends JPanel {
 
     private boolean inGame;
 
-    public Board(JLabel statusBar, String playerName, String level, int cookingSkills) {
+    public Board(JPanel pStatus, String playerName, String level, int cookingSkills) {
         // Game setup from input
-    	this.statusBar = statusBar;
+    	this.statusBar = pStatus;
+    	this.playerNameStatus = new JLabel("");
+    	statusBar.add(this.playerNameStatus);
+    	this.playerNameStatus.setHorizontalAlignment(JLabel.LEFT);
+    	this.energyStatus = new JLabel("");
+    	statusBar.add(this.energyStatus);
+    	this.skill1_Status = new JLabel("");
+    	statusBar.add(this.skill1_Status);
+    	this.skill2_Status = new JLabel("");
+    	statusBar.add(this.skill2_Status);
+    	this.bestScore = new JLabel("");
+    	statusBar.add(this.bestScore);
+    	
         this.level = new Level(level);
         this.player = new Player(playerName, cookingSkills);
         this.player.setEnergy(this.level.getInitEnergy());
@@ -99,12 +117,17 @@ public class Board extends JPanel {
         this.initCells();
         
         // Information of settings are shown in the statusBar below the board
-        this.statusBar.setText("Player: " + this.player.getPlayerName()
+        /*this.statusBar.setText("Player: " + this.player.getPlayerName()
         						+ "      Energy: " + Integer.toString(this.player.getEnergy())
-        						+ "      Cooking Skills: " + Integer.toString(this.player.getCookingSkills())
+        						+ "      Cooking: " + Integer.toString(this.player.getCookingSkills())
         						+ "      Chopping: " + Integer.toString(this.player.getChopping())
-        						+ "          High Score: " + Integer.toString(highscore));
-
+        						+ "          Best Score: " + Integer.toString(highscore));
+        */
+        this.playerNameStatus.setText("<html><br>Player:<br>" + this.player.getPlayerName() + "</html>");
+        this.skill1_Status.setText("Cooking: " + Integer.toString(this.player.getCookingSkills()));
+        this.skill2_Status.setText("Chopping: " + Integer.toString(this.player.getChopping()));
+        this.energyStatus.setText("Energy: " + Integer.toString(this.player.getEnergy()));
+        this.bestScore.setText("Best Score: " + Integer.toString(highscore));
         // Assign player to a random place on board and remember player's position
         while (num_player > 0) {
             int randX = random.nextInt(this.rows);
@@ -187,11 +210,17 @@ public class Board extends JPanel {
     	boolean gamewin = false;
     	
     	// Update status bar information
-    	this.statusBar.setText("Player: " + this.player.getPlayerName()
+    	/*this.statusBar.setText("Player: " + this.player.getPlayerName()
 		+ "      Energy: " + Integer.toString(this.player.getEnergy())
 		+ "      Cooking Skills: " + Integer.toString(this.player.getCookingSkills())
 		+ "      Chopping: " + Integer.toString(this.player.getChopping())
-		+ "          High Score: " + Integer.toString(highscore));
+		+ "          High Score: " + Integer.toString(highscore));*/
+        this.playerNameStatus.setText("<html><br>Player:<br>" + this.player.getPlayerName() + "</html>");
+        this.skill1_Status.setText("Cooking: " + Integer.toString(this.player.getCookingSkills()));
+        this.skill2_Status.setText("Chopping: " + Integer.toString(this.player.getChopping()));
+        this.energyStatus.setText("Energy: " + Integer.toString(this.player.getEnergy()));
+        this.bestScore.setText("Best Score: " + Integer.toString(highscore));
+
 
         for (int i = 0; i < this.rows; i++) {
             for (int j = 0; j < this.columns; j++) {
@@ -217,9 +246,9 @@ public class Board extends JPanel {
                     updateHighScore();
                     ImageIcon winIcon = new ImageIcon("src/img/j6.jpg");
                     if (score > highscore) {
-            			statusBar.setText("Game won! Your score of "+ score + 
+            			/*statusBar.setText("Game won! Your score of "+ score + 
             					" is the best score ever! The previous best score was " + 
-            					highscore + ".");
+            					highscore + ".");*/
                     	int input= JOptionPane.showOptionDialog(null,
                     			"Your score of " + score + 
                     			" is the best score ever! \nThe previous best score was " + 
@@ -233,7 +262,7 @@ public class Board extends JPanel {
                     		System.exit(0);
                     	}
                     } else if (score == highscore) {
-                    	statusBar.setText("Game won! You tied with the best score of " + score + "!");
+                    	/*statusBar.setText("Game won! You tied with the best score of " + score + "!");*/
                     	int input= JOptionPane.showOptionDialog(null,
                     			"You tied with the best score of " + score + 
                     			"!\n\nDo you want to play again?",
@@ -246,8 +275,8 @@ public class Board extends JPanel {
                     		System.exit(0);
                     	}
                     } else {
-                    	statusBar.setText("Game won! Your score is " + score
-                    						+ ". The best score ever is " + highscore + ".");
+                    	/*statusBar.setText("Game won! Your score is " + score
+                    						+ ". The best score ever is " + highscore + ".");*/
                     	int input= JOptionPane.showOptionDialog(null,
                     			"Game won! Your score is " + score
         						+ ". The best score ever is " + highscore + ".\n\nDo you want to play again?",
@@ -264,7 +293,7 @@ public class Board extends JPanel {
                 // Game is lost and over if player is out of energy and not winning the game
                 } else if (!inGame && !gamewin) {
                 	SoundEffect.LOSE.play();
-        			statusBar.setText("You're out of energy. Game Lost!");
+        			/*statusBar.setText("You're out of energy. Game Lost!");*/
         			ImageIcon lostIcon = new ImageIcon("src/img/j2.jpg");
                 	int input= JOptionPane.showOptionDialog(null, "You're out of energy. Game Over!\nDo you want to play again?",
         					"Game Over!", JOptionPane.YES_NO_OPTION,  JOptionPane.INFORMATION_MESSAGE, lostIcon, null, null);
