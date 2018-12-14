@@ -21,7 +21,9 @@ public enum SoundEffect {
 	MINUS("sounds/lose.wav"),
 	CUP("sounds/Cup.wav"),
 	WIN("sounds/applause.wav"), 
-	LOSE("sounds/gameOver.wav");
+	LOSE("sounds/gameOver.wav"),
+	WRONG("sounds/Down.wav"),
+	MOVE("sounds/click.wav");
    // Nested class for specifying volume
    public static enum Volume {
       MUTE, LOW, MEDIUM, HIGH

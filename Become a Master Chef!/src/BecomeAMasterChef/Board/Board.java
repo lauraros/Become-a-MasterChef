@@ -212,13 +212,13 @@ public class Board extends JPanel {
                     updateHighScore();
                     
                     if (score > highscore) {    
-                        statusBar.setText("Game won! You now have the new high score of "
-                        					+ score + "! The previous high score was " + highscore + ".");
+                        statusBar.setText("Game won! Your score of "
+                        					+ score + " is the best score ever! The previous best score was " + highscore + ".");
                     } else if (score == highscore) {
-                    	statusBar.setText("Game won! You tied the high score of " + score + "!");
+                    	statusBar.setText("Game won! You tied the best score of " + score + "!");
                     } else {
                     	statusBar.setText("Game won! Your score is " + score
-                    						+ ". The all time high score was " + highscore + ".");
+                    						+ ". The best score ever is " + highscore + ".");
                     }
                 
                 // Game is lost and over if player is out of energy and not winning the game
@@ -325,6 +325,7 @@ public class Board extends JPanel {
             // Out of bounds
             if ((pressedCol < 0 || pressedCol >= columns)
                 || (pressedRow < 0 || pressedRow >= rows)) {
+            	SoundEffect.WRONG.play();
                 return;
             }
 
@@ -332,8 +333,10 @@ public class Board extends JPanel {
 
             // Reaction to only left click on visible cells
             if (e.getButton() == MouseEvent.BUTTON3) {
+            	SoundEffect.WRONG.play();
                 return;
             } else if (!pressedCell.isVisible()) {
+            	SoundEffect.WRONG.play();
             	return;
             } else if (inGame && pressedCell.isVisible()) {
             		// Move player position to where clicked
@@ -379,6 +382,8 @@ public class Board extends JPanel {
                     		player.setChopping(player.getChopping() - 2);
                     	}
                     	cells[pressedRow][pressedCol].setChineseChef(false);
+                    } else {
+                    	SoundEffect.MOVE.play();
                     }
 
                     // Repaint the board
