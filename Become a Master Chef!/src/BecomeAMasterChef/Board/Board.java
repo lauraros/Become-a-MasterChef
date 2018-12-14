@@ -3,15 +3,20 @@ package BecomeAMasterChef.Board;
 import BecomeAMasterChef.*;
 import BecomeAMasterChef.SoundEffects.SoundEffect;
 
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import java.util.Random;
+
+import javax.swing.Icon;
 //import java.util.Scanner;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 //import java.io.File;
 //import java.io.IOException;
@@ -210,21 +215,69 @@ public class Board extends JPanel {
                     SoundEffect.WIN.play();
                     score = player.getEnergy() + player.getChopping() + player.getCookingSkills() + 1;
                     updateHighScore();
-                    
-                    if (score > highscore) {    
-                        statusBar.setText("Game won! Your score of "
-                        					+ score + " is the best score ever! The previous best score was " + highscore + ".");
+                    ImageIcon winIcon = new ImageIcon("src/img/j6.jpg");
+                    if (score > highscore) {
+            			statusBar.setText("Game won! Your score of "+ score + 
+            					" is the best score ever! The previous best score was " + 
+            					highscore + ".");
+                    	int input= JOptionPane.showOptionDialog(null,
+                    			"Your score of " + score + 
+                    			" is the best score ever! \nThe previous best score was " + 
+                    					highscore + ".\n\nDo you want to play again?",
+            					"You WON!", JOptionPane.YES_NO_OPTION,  JOptionPane.INFORMATION_MESSAGE, winIcon, null, null);
+                    	if(input == JOptionPane.YES_OPTION){
+                    		Game.getFrames()[1].dispose();
+                           	BaMC.initGUI();
+                           	return;
+                    	}else {
+                    		System.exit(0);
+                    	}
                     } else if (score == highscore) {
-                    	statusBar.setText("Game won! You tied the best score of " + score + "!");
+                    	statusBar.setText("Game won! You tied with the best score of " + score + "!");
+                    	int input= JOptionPane.showOptionDialog(null,
+                    			"You tied with the best score of " + score + 
+                    			"!\n\nDo you want to play again?",
+            					"You WON!", JOptionPane.YES_NO_OPTION,  JOptionPane.INFORMATION_MESSAGE, winIcon, null, null);
+                    	if(input == JOptionPane.YES_OPTION){
+                    		Game.getFrames()[1].dispose();
+                           	BaMC.initGUI();
+                           	return;
+                    	}else {
+                    		System.exit(0);
+                    	}
                     } else {
                     	statusBar.setText("Game won! Your score is " + score
                     						+ ". The best score ever is " + highscore + ".");
+                    	int input= JOptionPane.showOptionDialog(null,
+                    			"Game won! Your score is " + score
+        						+ ". The best score ever is " + highscore + ".\n\nDo you want to play again?",
+            					"You WON!", JOptionPane.YES_NO_OPTION,  JOptionPane.INFORMATION_MESSAGE, winIcon, null, null);
+                    	if(input == JOptionPane.YES_OPTION){
+                    		Game.getFrames()[1].dispose();
+                           	BaMC.initGUI();
+                           	return;
+                    	}else {
+                    		System.exit(0);
+                    	}
                     }
                 
                 // Game is lost and over if player is out of energy and not winning the game
                 } else if (!inGame && !gamewin) {
                 	SoundEffect.LOSE.play();
-                    statusBar.setText("You're out of energy. Game Lost!");
+        			statusBar.setText("You're out of energy. Game Lost!");
+        			ImageIcon lostIcon = new ImageIcon("src/img/j2.jpg");
+                	int input= JOptionPane.showOptionDialog(null, "You're out of energy. Game Over!\nDo you want to play again?",
+        					"Game Over!", JOptionPane.YES_NO_OPTION,  JOptionPane.INFORMATION_MESSAGE, lostIcon, null, null);
+                	if(input == JOptionPane.YES_OPTION){
+                		Game.getFrames()[1].dispose();
+                       	BaMC.initGUI();
+                       	return;
+                	}else {
+                		System.exit(0);
+                	}
+                    
+                }else {
+                	;
                 }
 
             	// Set cells visible around the player

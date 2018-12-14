@@ -33,7 +33,7 @@ public class BaMC{
 	}
 
 	// Setup GUI for game entrance
-	private void initGUI() {
+	public static void initGUI() {
 		// Settings for window frame
 		JFrame frame = new JFrame();
 		frame.setTitle("Become a Master Chef!");
@@ -135,14 +135,16 @@ public class BaMC{
 		frame.pack();
 		frame.setVisible(true);
 		
-        // Add a Listener to the 'start' button to start the game
+        // Adds a Listener to the 'start' button to start the game
         startButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-            	SoundEffect.init();
-            	SoundEffect.CLICKRIGHT.play();
+
 
                // Get 'player name', 'game level', and 'skill set' from input
             	String playerName = (String)playerNameField.getText();
+            	if (playerName.equals("")) {
+            		playerName = "Gordon Ramsay";
+            	}
                 String level = (String)levelBox.getSelectedItem();
                 int cookingSkills = (Integer)skill1V.getValue();
                 
@@ -150,7 +152,7 @@ public class BaMC{
             	new JLabel(frame.getTitle());
                	new Game(playerName, level, cookingSkills);
                	
-               	frame.setVisible(false);
+               	frame.dispose();
             }
         });
         }
