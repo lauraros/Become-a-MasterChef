@@ -15,6 +15,7 @@ public class Game extends JFrame{
 	private final int WIDTH = 648;
     private final int HEIGHT = 750;
 
+    // Constructor 
     public Game(String playerName, String level, int cookingSkills) {
     	
     	SoundEffect.init(); // Loads all necessary sounds

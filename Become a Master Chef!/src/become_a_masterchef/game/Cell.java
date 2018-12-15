@@ -11,6 +11,7 @@ public class Cell {
     private boolean italian_chef;	//cooking_skills_competitor
     private boolean chinese_chef;	//chopping_competitor
 
+    // Constructor 
     public Cell() {
         this.player = false;
         this.cover = true;

@@ -10,6 +10,7 @@ public class Level {
 	private int italian_chef_skill;							//Italian chef's cooking_skills
 	private int chinese_chef_skill;							//Chinese chef's chopping
 	
+	// Constructor 
 	public Level(String levelName) {
 		
 		this.levelName = levelName;

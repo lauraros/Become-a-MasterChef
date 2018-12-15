@@ -63,9 +63,11 @@ public class Board extends JPanel {
     private int rows = 16, columns = 16;
 
     private boolean inGame;
-
+    
+    // Constructor 
     public Board(JPanel pStatus, String playerName, String level, int cookingSkills) {
-        // Game setup from input
+        
+    	// Game setup from user input
     	this.statusBar = pStatus;
     	this.playerNameStatus = new JLabel("");
     	statusBar.add(this.playerNameStatus);

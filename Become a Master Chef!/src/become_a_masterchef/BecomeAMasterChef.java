@@ -17,7 +17,7 @@ import become_a_masterchef.game.Game;
 */
 public class BecomeAMasterChef{
 
-	
+	// Constructor 
 	public BecomeAMasterChef() {
 		initGUI();
 	}

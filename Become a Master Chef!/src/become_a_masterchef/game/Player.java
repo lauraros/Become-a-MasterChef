@@ -7,6 +7,7 @@ public class Player {
 	private int cooking_skills;
 	private int chopping;
 	
+	// Constructor 
 	public Player(String playerName, int cookingSkills) {
 		this.playerName = playerName;
 		this.cooking_skills = cookingSkills;
