@@ -11,8 +11,10 @@ import java.awt.event.ActionListener;
 // Import Game class
 import become_a_masterchef.game.Game;
 
-/* Main Class for the game: it initialize a GUI 
-for the initial settings of the game and start the Game.*/
+/* 
+ * Main Class for the game: it initialize a GUI 
+ * for the initial settings of the game and start the Game.
+*/
 public class BecomeAMasterChef{
 
 	
