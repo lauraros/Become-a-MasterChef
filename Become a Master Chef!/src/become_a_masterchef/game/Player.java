@@ -1,4 +1,4 @@
-package BecomeAMasterChef;
+package become_a_masterchef.game;
 
 // An player object saves its name, energy value, and skill sets
 public class Player {

@@ -1,78 +1,71 @@
-package BecomeAMasterChef;
+package become_a_masterchef;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.GridLayout;
-import javax.swing.JLabel;
-import java.awt.Font;
-import java.awt.FlowLayout;
-import javax.swing.SwingConstants;
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-import java.awt.Color;
-import java.awt.Dimension;
+// Import GUI related libraries 
+import javax.swing.*;
+import java.awt.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
-import BecomeAMasterChef.SoundEffects.SoundEffect;
-
-import javax.swing.JButton;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// Import Game class
+import become_a_masterchef.game.Game;
 
-public class BaMC{
+/* Main Class for the game: it initialize a GUI 
+for the initial settings of the game and start the Game.*/
+public class BecomeAMasterChef{
 
 	
-	public BaMC() {
+	public BecomeAMasterChef() {
 		initGUI();
 	}
 
 	// Setup GUI for game entrance
 	public static void initGUI() {
+		
 		// Settings for window frame
 		JFrame frame = new JFrame();
 		frame.setTitle("Become a Master Chef!");
-		frame.setBounds(100, 100, 360, 240);
+		frame.setBounds(100, 100, 350, 250);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
-		// Creating a panel for main Game settings
+		
+		// Creating a main panel 
 		JPanel mainPanel = new JPanel();
 		frame.getContentPane().add(mainPanel);
 		mainPanel.setLayout(new GridLayout(5, 2, 0, 0));
-		mainPanel.setPreferredSize(new Dimension(350, 250));
+		mainPanel.setPreferredSize(new Dimension(350, 350));
 		
-		JLabel welcome = new JLabel("Welcome to Become a Master Chef!");
+		// Welcoming Label
+		JLabel welcome = new JLabel("Welcome to Become a MasterChef!");
 		welcome.setHorizontalAlignment(SwingConstants.CENTER);
 		welcome.setFont(new Font("Tahoma", Font.BOLD, 14));
 		mainPanel.add(welcome);
 		
+		// Creating a separate panel for main Game settings
 		JPanel pSettings = new JPanel();
 		mainPanel.add(pSettings);
 		pSettings.setLayout(null);
 		
+		// Creating sevaral components for the main Game settings
 		JLabel playerNameLabel = new JLabel("What's Your Name?");
-		playerNameLabel.setBounds(0, 0, 171, 19);
+		playerNameLabel.setBounds(0, 0, 170, 20);
 		playerNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		pSettings.add(playerNameLabel);
 		
 		JTextField playerNameField = new JTextField();
-		playerNameField.setBounds(200, 0, 120, 19);
+		playerNameField.setBounds(200, 0, 120, 20);
 		playerNameField.setHorizontalAlignment(SwingConstants.RIGHT);
 		pSettings.add(playerNameField);
 		playerNameField.setColumns(10);
 		
 		JLabel levelLabel = new JLabel("Choose a Level");
-		levelLabel.setBounds(0, 20, 171, 19);
+		levelLabel.setBounds(0, 20, 170, 20);
 		levelLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		pSettings.add(levelLabel);
 		
 		JComboBox<String> levelBox = new JComboBox<>();
-		levelBox.setBounds(200, 20, 120, 19);
+		levelBox.setBounds(200, 20, 120, 20);
 		levelBox.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
 		levelBox.setModel(new DefaultComboBoxModel<>(new String[] {"Easy", "Medium", "Hard", "Hardest"}));
 		pSettings.add(levelBox);
@@ -107,6 +100,7 @@ public class BaMC{
 		pSkills.add(Skill2Label);
 		
 		// Add a Listener to both spinners so that their value is interdependent
+		// Spinner 1 Listener
 		skill1model.addChangeListener(new ChangeListener(){
 		public void stateChanged(ChangeEvent e){
 			  SpinnerNumberModel model = (SpinnerNumberModel)e.getSource();
@@ -116,6 +110,8 @@ public class BaMC{
 			  skill2model.setValue(10-value);
 			}
 		});
+		
+		// Spinner 1 Listener
 		skill2model.addChangeListener(new ChangeListener(){
 		public void stateChanged(ChangeEvent e){
 			  SpinnerNumberModel model = (SpinnerNumberModel)e.getSource();
@@ -126,6 +122,7 @@ public class BaMC{
 			}
 		});	
 		
+		// Add a button to start the Game
 		JButton startButton = new JButton("Start");
 		startButton.setFont(new Font("Tahoma", Font.BOLD, 14));
 		startButton.setForeground(new Color(0, 0, 205));
@@ -139,7 +136,6 @@ public class BaMC{
         startButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
 
-
                // Get 'player name', 'game level', and 'skill set' from input
             	String playerName = (String)playerNameField.getText();
             	if (playerName.equals("")) {
@@ -149,21 +145,19 @@ public class BaMC{
                 int cookingSkills = (Integer)skill1V.getValue();
                 
                 // Creating a new game with input values as settings
-            	new JLabel(frame.getTitle());
                	new Game(playerName, level, cookingSkills);
-               	
                	frame.dispose();
             }
         });
         }
 
-
+	
 	//Game entrance
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
             public void run() {
             	try {
-            		new BaMC();
+            		new BecomeAMasterChef();
             	}catch (Exception e) {
             		e.printStackTrace();
             	}

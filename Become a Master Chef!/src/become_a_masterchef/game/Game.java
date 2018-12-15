@@ -1,4 +1,4 @@
-package BecomeAMasterChef;
+package become_a_masterchef.game;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -8,8 +8,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import BecomeAMasterChef.Board.*;
-import BecomeAMasterChef.SoundEffects.SoundEffect;
+import become_a_masterchef.game.*;
+import become_a_masterchef.sound_effects.SoundEffect;
 
 // Sets up the game GUI and passes input variables in a new game
 @SuppressWarnings("serial")
@@ -25,7 +25,7 @@ public class Game extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(WIDTH, HEIGHT);
         setLocationRelativeTo(null);
-        setTitle("Become A Master Chef");
+        setTitle("Become A MasterChef");
         //statusbar = new JLabel("");
         //add(statusbar, BorderLayout.SOUTH);
         //add(new Board(statusbar, playerName, level, cookingSkills));

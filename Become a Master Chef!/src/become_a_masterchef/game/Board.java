@@ -1,7 +1,4 @@
-package BecomeAMasterChef.Board;
-
-import BecomeAMasterChef.*;
-import BecomeAMasterChef.SoundEffects.SoundEffect;
+package become_a_masterchef.game;
 
 import java.awt.Component;
 import java.awt.Graphics;
@@ -19,6 +16,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+
+import become_a_masterchef.*;
+import become_a_masterchef.sound_effects.SoundEffect;
 
 //import java.io.File;
 //import java.io.IOException;
@@ -257,7 +257,7 @@ public class Board extends JPanel {
             					"You WON!", JOptionPane.YES_NO_OPTION,  JOptionPane.INFORMATION_MESSAGE, winIcon, null, null);
                     	if(input == JOptionPane.YES_OPTION){
                     		Game.getFrames()[1].dispose();
-                           	BaMC.initGUI();
+                           	BecomeAMasterChef.initGUI();
                            	return;
                     	}else {
                     		System.exit(0);
@@ -270,7 +270,7 @@ public class Board extends JPanel {
             					"You WON!", JOptionPane.YES_NO_OPTION,  JOptionPane.INFORMATION_MESSAGE, winIcon, null, null);
                     	if(input == JOptionPane.YES_OPTION){
                     		Game.getFrames()[1].dispose();
-                           	BaMC.initGUI();
+                           	BecomeAMasterChef.initGUI();
                            	return;
                     	}else {
                     		System.exit(0);
@@ -284,7 +284,7 @@ public class Board extends JPanel {
             					"You WON!", JOptionPane.YES_NO_OPTION,  JOptionPane.INFORMATION_MESSAGE, winIcon, null, null);
                     	if(input == JOptionPane.YES_OPTION){
                     		Game.getFrames()[1].dispose();
-                           	BaMC.initGUI();
+                           	BecomeAMasterChef.initGUI();
                            	return;
                     	}else {
                     		System.exit(0);
@@ -300,7 +300,7 @@ public class Board extends JPanel {
         					"Game Over!", JOptionPane.YES_NO_OPTION,  JOptionPane.INFORMATION_MESSAGE, lostIcon, null, null);
                 	if(input == JOptionPane.YES_OPTION){
                 		Game.getFrames()[1].dispose();
-                       	BaMC.initGUI();
+                       	BecomeAMasterChef.initGUI();
                        	return;
                 	}else {
                 		System.exit(0);

@@ -1,4 +1,4 @@
-package BecomeAMasterChef;
+package become_a_masterchef.game;
 
 //An level object decides the initial settings of player's energy and opponents skill sets
 public class Level {

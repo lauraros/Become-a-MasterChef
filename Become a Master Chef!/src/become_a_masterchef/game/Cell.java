@@ -1,4 +1,4 @@
-package BecomeAMasterChef.Board;
+package become_a_masterchef.game;
 
 // A cell object controls one cell on the board
 public class Cell {

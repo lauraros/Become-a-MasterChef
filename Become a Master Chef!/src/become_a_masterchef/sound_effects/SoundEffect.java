@@ -1,4 +1,4 @@
-package BecomeAMasterChef.SoundEffects;
+package become_a_masterchef.sound_effects;
 
 import java.io.*;
 import java.net.URL;
