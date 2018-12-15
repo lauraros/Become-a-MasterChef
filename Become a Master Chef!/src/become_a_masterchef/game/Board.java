@@ -480,10 +480,16 @@ public class Board extends JPanel {
     
     // Record and update scores in a text file
     private void updateHighScore() {
-    
+    	String scoreFilePath = 	"src/score.txt";
+    	File f = new File(scoreFilePath);
     	// Read the current high score
     	try {
-    	BufferedReader reader = new BufferedReader(new FileReader("src/score.txt"));
+    		if(!f.exists()){
+    			f.createNewFile();
+    			highscore = 0;
+    		}else{
+
+    	BufferedReader reader = new BufferedReader(new FileReader(scoreFilePath));
         String line = reader.readLine();
         while (line != null)		// read the score file line by line
         {
@@ -499,7 +505,7 @@ public class Board extends JPanel {
             }
             line = reader.readLine();
         }
-        reader.close();
+        reader.close();}
 
     } catch (IOException ex) {
         System.err.println("ERROR missing file 'src/score.txt'");
@@ -508,7 +514,7 @@ public class Board extends JPanel {
 
     	// Append the last score to the end of the file
 		try {
-	    BufferedWriter output = new BufferedWriter(new FileWriter("src/score.txt", true));
+	    BufferedWriter output = new BufferedWriter(new FileWriter(scoreFilePath, true));
 	    output.newLine();
 	    output.append("" + score);
 	    output.close();
