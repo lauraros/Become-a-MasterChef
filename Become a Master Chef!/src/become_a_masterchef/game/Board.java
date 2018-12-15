@@ -278,7 +278,7 @@ public class Board extends JPanel {
                     	/*statusBar.setText("Game won! Your score is " + score
                     						+ ". The best score ever is " + highscore + ".");*/
                     	int input= JOptionPane.showOptionDialog(null,
-                    			"Game won! Your score is " + score
+                    			"Your score is " + score
         						+ ". The best score ever is " + highscore + ".\n\nDo you want to play again?",
             					"You WON!", JOptionPane.YES_NO_OPTION,  JOptionPane.INFORMATION_MESSAGE, winIcon, null, null);
                     	if(input == JOptionPane.YES_OPTION){
