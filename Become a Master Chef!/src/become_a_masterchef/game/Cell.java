@@ -1,6 +1,6 @@
 package become_a_masterchef.game;
 
-// A cell object controls one cell on the board
+/* A cell object controls one cell on the board. */
 public class Cell {
     private boolean player;
     private boolean cover;			//cell is invisible

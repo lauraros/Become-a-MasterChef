@@ -1,6 +1,6 @@
 package become_a_masterchef.game;
 
-// An player object saves its name, energy value, and skill sets
+/* An player class saves its name, energy value, and skill sets. */
 public class Player {
 	private String playerName;
 	private int energy;

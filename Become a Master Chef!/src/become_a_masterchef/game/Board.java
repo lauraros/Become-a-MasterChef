@@ -1,36 +1,33 @@
 package become_a_masterchef.game;
 
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Image;
+// Import GUI related libraries 
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+// Import Random class 
 import java.util.Random;
 
-import javax.swing.Icon;
-//import java.util.Scanner;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-
+// Import Game related sources
 import become_a_masterchef.*;
 import become_a_masterchef.sound_effects.SoundEffect;
 
-//import java.io.File;
-//import java.io.IOException;
-//import java.io.PrintWriter;
 import java.io.*;
 
+/* 
+ * The Board Class is a JPanel that contains two other JPanels:
+ * 1. Game Board: . . . . can you fill in?
+ * 2. A Status Bar with current Status information for the user 
+*/
 @SuppressWarnings("serial")
 public class Board extends JPanel {
-    // Constants
+    
+	// Constants for the Game Board
     private final int CELL_SIZE  = 40;
     private final int NUM_IMAGES = 8;
-
+    
+    // Assigning index to selected images to facilitate the call 
     private final int IMAGE_COVER       	= 0;
     private final int IMAGE_BONUS 			= 1;
     private final int IMAGE_MINUS       	= 2;

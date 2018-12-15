@@ -1,6 +1,6 @@
 package become_a_masterchef;
 
-// Import GUI related libraries 
+// Import GUI related libraries and classes
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.event.ChangeEvent;
