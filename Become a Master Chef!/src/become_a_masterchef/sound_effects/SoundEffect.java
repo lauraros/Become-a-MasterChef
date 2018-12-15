@@ -4,16 +4,14 @@ import java.io.*;
 import java.net.URL;
 import javax.sound.sampled.*;
 
-/**
- * This enum encapsulates all the sound effects of a game, so as to separate the sound playing
- * codes from the game codes.
- * 1. Define all your sound effect names and the associated wave file.
- * 2. To play a specific sound, simply invoke SoundEffect.SOUND_NAME.play().
- * 3. You might optionally invoke the static method SoundEffect.init() to pre-load all the
- *    sound files, so that the play is not paused while loading the file for the first time.
- * 4. You can use the static variable SoundEffect.volume to mute the sound.
+/*
+ * This enum encapsulates all the sound effects of our game, so as to separate the sound playing
+ * codes from the game codes. It allows to simply invoke SoundEffect.SOUND_NAME.play().
+ * to play a sound.
  */
 public enum SoundEffect {
+
+	// Definition of all our sound effect names and the associated wave file.
 	CLICKRIGHT("sounds/service-bell.wav"),
 	ITALIAN("sounds/mammamia.wav"),
 	CHINESE("sounds/chinese-gong.wav"),
@@ -24,7 +22,8 @@ public enum SoundEffect {
 	LOSE("sounds/gameOver.wav"),
 	WRONG("sounds/Down.wav"),
 	MOVE("sounds/click.wav");
-   // Nested class for specifying volume
+   
+	// Nested class for specifying volume
    public static enum Volume {
       MUTE, LOW, MEDIUM, HIGH
    }
@@ -38,23 +37,23 @@ public enum SoundEffect {
    // Constructor to construct each element of the enum with its own sound file.
    SoundEffect(String soundFileName) {
       try {
-         // Use URL (instead of File) to read from disk and JAR.
+         
+    	 // Use URL (instead of File) to read from disk and JAR.
          URL url = this.getClass().getClassLoader().getResource(soundFileName);
+         
          // Set up an audio input stream piped from the sound file.
          AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
+         
          // Get a clip resource.
          clip = AudioSystem.getClip();
+         
          // Open audio clip and load samples from the audio input stream.
          clip.open(audioInputStream);
       } catch (UnsupportedAudioFileException e) {
-         System.out.println("unsupported");
-    	 e.printStackTrace();
-         
+    	 e.printStackTrace();        
       } catch (IOException e) {
-         System.out.println("IO");
          e.printStackTrace();
       } catch (LineUnavailableException e) {
-         System.out.println("LineUnavailableException");
          e.printStackTrace();
       }
    }
@@ -69,7 +68,8 @@ public enum SoundEffect {
       }
    }
 
-   // Optional static method to pre-load all the sound files.
+   /* Optional static method to pre-load all the sound files 
+   so that the play is not paused while loading the file for the first time.*/
    public static void init() {
       values(); // calls the constructor for all the elements
    }
