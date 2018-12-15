@@ -83,10 +83,10 @@ public class BecomeAMasterChef{
 		FlowLayout fl_pSkills = new FlowLayout(FlowLayout.CENTER, 2, 2);
 		pSkills.setLayout(fl_pSkills);
 		
-		JLabel Skill1Label = new JLabel("Cooking Skills");
-		Skill1Label.setForeground(new Color(165, 42, 42));
-		Skill1Label.setFont(new Font("Tahoma", Font.BOLD, 13));
-		pSkills.add(Skill1Label);
+		JLabel skill1Label = new JLabel("Cooking Skills");
+		skill1Label.setForeground(new Color(165, 42, 42));
+		skill1Label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		pSkills.add(skill1Label);
 		
 		SpinnerNumberModel skill1model = new SpinnerNumberModel( 5, 0, 10, 1 );
 		SpinnerNumberModel skill2model = new SpinnerNumberModel( 5, 0, 10, 1 );
@@ -96,10 +96,10 @@ public class BecomeAMasterChef{
 		pSkills.add(skill1V);
 		pSkills.add(skill2V);
 		
-		JLabel Skill2Label = new JLabel("Chopping");
-		Skill2Label.setForeground(new Color(0, 128, 128));
-		Skill2Label.setFont(new Font("Tahoma", Font.BOLD, 13));
-		pSkills.add(Skill2Label);
+		JLabel skill2Label = new JLabel("Chopping");
+		skill2Label.setForeground(new Color(0, 128, 128));
+		skill2Label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		pSkills.add(skill2Label);
 		
 		// Add a Listener to both spinners so that their value is interdependent
 		// Spinner 1 Listener
