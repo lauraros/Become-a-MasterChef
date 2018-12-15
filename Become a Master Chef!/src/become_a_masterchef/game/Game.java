@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 // Import SoundEffect class
 import become_a_masterchef.sound_effects.SoundEffect;
 
-/* Sets up the game GUI and passes setting variables to a new board*/
+/* Sets up the game GUI and instantiate a new board with input setting variables. */
 @SuppressWarnings("serial")
 public class Game extends JFrame{
 	private final int WIDTH = 648;
