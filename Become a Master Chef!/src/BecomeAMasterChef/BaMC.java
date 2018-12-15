@@ -131,7 +131,7 @@ public class BaMC{
 		startButton.setForeground(new Color(0, 0, 205));
 		mainPanel.add(startButton);
 		startButton.setEnabled(true);
-		
+		frame.setLocationRelativeTo(null); 
 		frame.pack();
 		frame.setVisible(true);
 		
