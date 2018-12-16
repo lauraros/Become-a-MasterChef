@@ -17,7 +17,7 @@ import java.io.*;
 
 /* 
  * A board object contains the board for a new game and a JPanel status bar:
- * 1. Game Board: composed of cells in a matrix where the game is played
+ * 1. Game board composed of cells in a matrix where the game is played
  * 2. Status bar shows current status information for the player 
 */
 @SuppressWarnings("serial")
@@ -480,7 +480,7 @@ public class Board extends JPanel {
     		if(!f.exists()){
     			f.createNewFile();
     			highscore = 0;
-    		}else{
+    		} else {
 
     	BufferedReader reader = new BufferedReader(new FileReader(scoreFilePath));
         String line = reader.readLine();
@@ -500,10 +500,10 @@ public class Board extends JPanel {
         }
         reader.close();}
 
-    } catch (IOException ex) {
+    	} catch (IOException ex) {
         System.err.println("ERROR missing file 'src/score.txt'");
-        System.exit(1);    
-    }
+        System.exit(1);
+        }
 
     	// Append the last score to the end of the file
 		try {
