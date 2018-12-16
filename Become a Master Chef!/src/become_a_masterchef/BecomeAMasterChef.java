@@ -49,7 +49,7 @@ public class BecomeAMasterChef{
 		mainPanel.add(pSettings);
 		pSettings.setLayout(null);
 		
-		// Creating sevaral components for the main Game settings
+		// Creating several components for the main Game settings
 		JLabel playerNameLabel = new JLabel("What's Your Name?");
 		playerNameLabel.setBounds(0, 0, 170, 20);
 		playerNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -141,7 +141,7 @@ public class BecomeAMasterChef{
                // Get 'player name', 'game level', and 'skill set' from input
             	String playerName = (String)playerNameField.getText();
             	if (playerName.equals("")) {
-            		playerName = "Gordon Ramsay";
+            		playerName = "(Empty)";
             	}
                 String level = (String)levelBox.getSelectedItem();
                 int cookingSkills = (Integer)skill1V.getValue();

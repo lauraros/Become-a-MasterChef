@@ -16,9 +16,9 @@ import become_a_masterchef.sound_effects.SoundEffect;
 import java.io.*;
 
 /* 
- * The Board Class is a JPanel that contains two other JPanels:
- * 1. Game Board: . . . . can you fill in?
- * 2. A Status Bar with current Status information for the user 
+ * A board object contains the board for a new game and a JPanel status bar:
+ * 1. Game Board: composed of cells in a matrix where the game is played
+ * 2. Status bar shows current status information for the player 
 */
 @SuppressWarnings("serial")
 public class Board extends JPanel {
@@ -117,17 +117,12 @@ public class Board extends JPanel {
         this.initCells();
         
         // Information of settings are shown in the statusBar below the board
-        /*this.statusBar.setText("Player: " + this.player.getPlayerName()
-        						+ "      Energy: " + Integer.toString(this.player.getEnergy())
-        						+ "      Cooking: " + Integer.toString(this.player.getCookingSkills())
-        						+ "      Chopping: " + Integer.toString(this.player.getChopping())
-        						+ "          Best Score: " + Integer.toString(highscore));
-        */
         this.playerNameStatus.setText("Player:" + this.player.getPlayerName());
         this.skill1_Status.setText("Cooking: " + Integer.toString(this.player.getCookingSkills()));
         this.skill2_Status.setText("Chopping: " + Integer.toString(this.player.getChopping()));
         this.energyStatus.setText("Energy: " + Integer.toString(this.player.getEnergy()));
         this.bestScore.setText("Best Score: " + Integer.toString(highscore));
+        
         // Assign player to a random place on board and remember player's position
         while (num_player > 0) {
             int randX = random.nextInt(this.rows);
@@ -180,7 +175,7 @@ public class Board extends JPanel {
             }
         }
 
-        // Assign competitor_1 (Italian chef: cooking skills) to random places on board
+        // Assign competitor_1 (Italian chef: corresponds to cooking skills) to random places on board
         while (num_italian_chef > 0) {
             int randX = random.nextInt(this.rows);
             int randY = random.nextInt(this.columns);
@@ -192,7 +187,7 @@ public class Board extends JPanel {
             }
         }
         
-        // Assign competitor_2 (Chinese chef: chopping) to random places on board
+        // Assign competitor_2 (Chinese chef: corresponds to chopping) to random places on board
         while (num_chinese_chef > 0) {
             int randX = random.nextInt(this.rows);
             int randY = random.nextInt(this.columns);
@@ -210,11 +205,6 @@ public class Board extends JPanel {
     	boolean gamewin = false;
     	
     	// Update status bar information
-    	/*this.statusBar.setText("Player: " + this.player.getPlayerName()
-		+ "      Energy: " + Integer.toString(this.player.getEnergy())
-		+ "      Cooking Skills: " + Integer.toString(this.player.getCookingSkills())
-		+ "      Chopping: " + Integer.toString(this.player.getChopping())
-		+ "          High Score: " + Integer.toString(highscore));*/
         this.playerNameStatus.setText("Player: " + this.player.getPlayerName());
         this.skill1_Status.setText("Cooking: " + Integer.toString(this.player.getCookingSkills()));
         this.skill2_Status.setText("Chopping: " + Integer.toString(this.player.getChopping()));
@@ -232,7 +222,7 @@ public class Board extends JPanel {
 
                 // Game is over whenever player is out of energy
                 if (inGame) {	
-                    if (player.getEnergy() == 0) {
+                    if (player.getEnergy() <= 0) {
                         inGame = false;
                     }
                 }
@@ -241,73 +231,69 @@ public class Board extends JPanel {
             	if (cell.isGoal() && cell.isPlayer() && player.getEnergy() >= 0) {
                     inGame = false;
                     gamewin = true;
-                    SoundEffect.WIN.play();
-                    score = player.getEnergy() + player.getChopping() + player.getCookingSkills() + 1;
-                    updateHighScore();
                     ImageIcon winIcon = new ImageIcon("src/img/j6.jpg");
+                    SoundEffect.WIN.play();
+                    score = player.getEnergy() + player.getChopping() + player.getCookingSkills();
+                    updateHighScore();
+                    
                     if (score > highscore) {
-            			/*statusBar.setText("Game won! Your score of "+ score + 
-            					" is the best score ever! The previous best score was " + 
-            					highscore + ".");*/
                     	int input= JOptionPane.showOptionDialog(null,
                     			"Your score of " + score + 
                     			" is the best score ever! \nThe previous best score was " + 
                     					highscore + ".\n\nDo you want to play again?",
-            					"You WON!", JOptionPane.YES_NO_OPTION,  JOptionPane.INFORMATION_MESSAGE, winIcon, null, null);
+            					"You WON!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, winIcon, null, null);
                     	if(input == JOptionPane.YES_OPTION){
                     		Game.getFrames()[1].dispose();
                            	BecomeAMasterChef.initGUI();
                            	return;
-                    	}else {
+                    	} else {
                     		System.exit(0);
                     	}
+                    	
                     } else if (score == highscore) {
-                    	/*statusBar.setText("Game won! You tied with the best score of " + score + "!");*/
                     	int input= JOptionPane.showOptionDialog(null,
                     			"You tied with the best score of " + score + 
                     			"!\n\nDo you want to play again?",
-            					"You WON!", JOptionPane.YES_NO_OPTION,  JOptionPane.INFORMATION_MESSAGE, winIcon, null, null);
+            					"You WON!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, winIcon, null, null);
                     	if(input == JOptionPane.YES_OPTION){
                     		Game.getFrames()[1].dispose();
                            	BecomeAMasterChef.initGUI();
                            	return;
-                    	}else {
+                    	} else {
                     		System.exit(0);
                     	}
+                    	
                     } else {
-                    	/*statusBar.setText("Game won! Your score is " + score
-                    						+ ". The best score ever is " + highscore + ".");*/
                     	int input= JOptionPane.showOptionDialog(null,
                     			"Your score is " + score
         						+ ". The best score ever is " + highscore + ".\n\nDo you want to play again?",
-            					"You WON!", JOptionPane.YES_NO_OPTION,  JOptionPane.INFORMATION_MESSAGE, winIcon, null, null);
+            					"You WON!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, winIcon, null, null);
                     	if(input == JOptionPane.YES_OPTION){
                     		Game.getFrames()[1].dispose();
                            	BecomeAMasterChef.initGUI();
                            	return;
-                    	}else {
+                    	} else {
                     		System.exit(0);
                     	}
                     }
                 
                 // Game is lost and over if player is out of energy and not winning the game
                 } else if (!inGame && !gamewin) {
-                	SoundEffect.LOSE.play();
-        			/*statusBar.setText("You're out of energy. Game Lost!");*/
         			ImageIcon lostIcon = new ImageIcon("src/img/j2.jpg");
+                	SoundEffect.LOSE.play();
                 	int input= JOptionPane.showOptionDialog(null, "You're out of energy. Game Over!\nDo you want to play again?",
         					"Game Over!", JOptionPane.YES_NO_OPTION,  JOptionPane.INFORMATION_MESSAGE, lostIcon, null, null);
                 	if(input == JOptionPane.YES_OPTION){
                 		Game.getFrames()[1].dispose();
                        	BecomeAMasterChef.initGUI();
                        	return;
-                	}else {
+                	} else {
                 		System.exit(0);
                 	}
                     
-                }else {
+                } else {
                 	;
-                }
+                	}
 
             	// Set cells visible around the player
             	if (isAroundPlayer(i,j)) {
@@ -318,6 +304,8 @@ public class Board extends JPanel {
             	else if (i == playerPos[0] && j == playerPos[1]) {
             		cell.setVisible(true);
             	}
+            	
+            	// All the other cells set to be invisible
             	else {
             		cell.setVisible(false);
             	}
@@ -370,6 +358,7 @@ public class Board extends JPanel {
     private boolean isAroundPlayer(int x, int y) {
         boolean around_player = false;
 
+        // Exclude out-of-bound cells
         for (int i = -1; i <= 1; ++i) {
             int xIndex = x + i;
             if (xIndex < 0 || xIndex >= this.rows) {
@@ -382,6 +371,7 @@ public class Board extends JPanel {
                     continue;
                 }
 
+                // Exclude the player's position
                 if (i == 0 && j == 0) {
                     continue;
                 }
@@ -418,6 +408,9 @@ public class Board extends JPanel {
             	SoundEffect.WRONG.play();
                 return;
             } else if (!pressedCell.isVisible()) {
+            	SoundEffect.WRONG.play();
+            	return;
+            } else if (pressedCell.isPlayer()) {
             	SoundEffect.WRONG.play();
             	return;
             } else if (inGame && pressedCell.isVisible()) {

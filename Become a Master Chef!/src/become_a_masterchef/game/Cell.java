@@ -7,7 +7,7 @@ public class Cell {
     private boolean empty;			//cell is empty
     private boolean goal;			//MasterChef Title
     private boolean bonus;			//bonus is an event that increases energy
-    private boolean minus;			//bonus is an event that decreases energy
+    private boolean minus;			//minus is an event that decreases energy
     private boolean italian_chef;	//cooking_skills_competitor
     private boolean chinese_chef;	//chopping_competitor
 

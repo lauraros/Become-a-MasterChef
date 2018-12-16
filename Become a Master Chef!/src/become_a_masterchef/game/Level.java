@@ -2,7 +2,7 @@ package become_a_masterchef.game;
 
 /*
  * A level object decides the initial settings of player's energy 
- * and opponents skill sets.
+ * and competitors' skill sets.
  */
 public class Level {
 	private String levelName;

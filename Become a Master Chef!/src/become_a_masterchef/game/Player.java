@@ -1,6 +1,6 @@
 package become_a_masterchef.game;
 
-/* A player class saves its name, energy value, and skill sets. */
+/* A player object saves its name, energy value, and skill sets. */
 public class Player {
 	private String playerName;
 	private int energy;
@@ -31,7 +31,11 @@ public class Player {
 	}
 	
 	public void setCookingSkills(int cooking_skills) {
+		if (cooking_skills >= 0) {
 		this.cooking_skills = cooking_skills;
+		} else {
+			this.cooking_skills = 0;
+		}
 	}
 	
 	public int getCookingSkills() {
@@ -39,7 +43,11 @@ public class Player {
 	}
 	
 	public void setChopping(int chopping) {
-		this.chopping = chopping;
+		if (chopping >= 0) {
+			this.chopping = chopping;
+			} else {
+				this.chopping = 0;
+			}
 	}
 	
 	public int getChopping() {
