@@ -13,28 +13,28 @@ import become_a_masterchef.sound_effects.SoundEffect;
 @SuppressWarnings("serial")
 public class Game extends JFrame{
 	private final int WIDTH = 648;
-    private final int HEIGHT = 750;
+	private final int HEIGHT = 750;
 
-    // Constructor 
-    public Game(String playerName, String level, int cookingSkills) {
-    	
-    	SoundEffect.init(); // Loads all necessary sounds
-    	SoundEffect.CLICKRIGHT.play(); // plays start game sound
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(WIDTH, HEIGHT);
-        setLocationRelativeTo(null);
-        setTitle("Become A MasterChef");
-        
+	// Constructor 
+	public Game(String playerName, String level, int cookingSkills) {
+
+		SoundEffect.init(); // Loads all necessary sounds
+		SoundEffect.CLICKRIGHT.play(); // plays start game sound
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(WIDTH, HEIGHT);
+		setLocationRelativeTo(null);
+		setTitle("Become A MasterChef");
+
 		// Creating a separate Panel for the current status information
 		JPanel pStatus = new JPanel();
 		add(pStatus, BorderLayout.SOUTH);
 		FlowLayout pStatus_layout = new FlowLayout(FlowLayout.CENTER, 30, 30);
 		pStatus.setLayout(pStatus_layout);
 		add(new Board(pStatus, playerName, level, cookingSkills));
-		
-        setResizable(false);
-        setVisible(true);
-    }
+
+		setResizable(false);
+		setVisible(true);
+	}
 }
 
 // Optional main method to check game flow
@@ -44,4 +44,4 @@ public class Game extends JFrame{
     }
 
 }
-*/
+ */

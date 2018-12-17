@@ -18,7 +18,6 @@ public enum SoundEffect {
 	CHINESE("sounds/chinese-gong.wav"),
 	BONUS("sounds/bonus.wav"),
 	MINUS("sounds/lose.wav"),
-	CUP("sounds/Cup.wav"),
 	WIN("sounds/applause.wav"), 
 	LOSE("sounds/gameOver.wav"),
 	WRONG("sounds/Down.wav"),
@@ -53,11 +52,11 @@ public enum SoundEffect {
 
 	// Play or Re-play the sound effect from the beginning, by rewinding.
 	public void play() {
-	if (clip.isRunning())
-		clip.stop();   // Stop the player if it is still running
+		if (clip.isRunning())
+			clip.stop();   // Stop the player if it is still running
 		clip.setFramePosition(0); // rewind to the beginning
 		clip.start();     // Start playing
-		
+
 	}
 
 	/* Optional static method to pre-load all the sound files 

@@ -40,8 +40,8 @@ public class Board extends JPanel {
 	private JPanel statusBar;
 	private JLabel playerNameStatus;
 	private JLabel energyStatus;
-	private JLabel skill1_Status;
-	private JLabel skill2_Status;
+	private JLabel skillStatus1;
+	private JLabel skillStatus2;
 	private JLabel bestScore;
 
 	private Player player;
@@ -53,12 +53,12 @@ public class Board extends JPanel {
 	private int highscore;
 
 	// Number of all objects on the board
-	private int num_player = 1;
-	private int num_goal = 1;
-	private int num_bonus = 5;
-	private int num_minus = 5;
-	private int num_italian_chef = 3;
-	private int num_chinese_chef = 3;
+	private int playerNum = 1;
+	private int goalNum = 1;
+	private int bonusNum = 5;
+	private int minusNum = 5;
+	private int italianChefNum = 3;
+	private int chineseChefNum = 3;
 
 	private int rows = 16, columns = 16;
 
@@ -73,10 +73,10 @@ public class Board extends JPanel {
 		statusBar.add(this.playerNameStatus);
 		this.energyStatus = new JLabel("");
 		statusBar.add(this.energyStatus);
-		this.skill1_Status = new JLabel("");
-		statusBar.add(this.skill1_Status);
-		this.skill2_Status = new JLabel("");
-		statusBar.add(this.skill2_Status);
+		this.skillStatus1 = new JLabel("");
+		statusBar.add(this.skillStatus1);
+		this.skillStatus2 = new JLabel("");
+		statusBar.add(this.skillStatus2);
 		this.bestScore = new JLabel("");
 		statusBar.add(this.bestScore);
 
@@ -97,7 +97,7 @@ public class Board extends JPanel {
 		this.newGame();
 	}
 
-	
+
 	// Create a matrix for the board layout
 	private void initCells () {
 		this.cells = new Cell[rows][columns];
@@ -108,7 +108,7 @@ public class Board extends JPanel {
 			}
 		}
 	}
-	
+
 
 	// Start a new game
 	public void newGame () {
@@ -120,13 +120,13 @@ public class Board extends JPanel {
 
 		// Information of settings are shown in the statusBar below the board
 		this.playerNameStatus.setText("Player:" + this.player.getPlayerName());
-		this.skill1_Status.setText("Cooking: " + Integer.toString(this.player.getCookingSkills()));
-		this.skill2_Status.setText("Chopping: " + Integer.toString(this.player.getChopping()));
+		this.skillStatus1.setText("Cooking: " + Integer.toString(this.player.getCookingSkills()));
+		this.skillStatus2.setText("Chopping: " + Integer.toString(this.player.getChopping()));
 		this.energyStatus.setText("Energy: " + Integer.toString(this.player.getEnergy()));
 		this.bestScore.setText("Best Score: " + Integer.toString(highscore));
 
 		// Assign player to a random place on board and remember player's position
-		while (num_player > 0) {
+		while (playerNum > 0) {
 			int randX = random.nextInt(this.rows);
 			int randY = random.nextInt(this.columns);
 
@@ -136,12 +136,12 @@ public class Board extends JPanel {
 				playerPos[0] = randX;
 				playerPos[1] = randY;
 				//System.out.println("init player: " + playerPos[0] + ", " + playerPos[1]);
-				num_player--;
+				playerNum--;
 			}
 		}
 
 		// Assign goal to a random place on board
-		while (num_goal > 0) {
+		while (goalNum > 0) {
 			int randX = random.nextInt(this.rows);
 			int randY = random.nextInt(this.columns);
 
@@ -149,55 +149,55 @@ public class Board extends JPanel {
 			if (cell.isEmpty()) {
 				cell.setGoal(true);
 				//System.out.println("init goal: " + randX + ", " + randY);
-				num_goal--;
+				goalNum--;
 			}
 		}
 
 		// Assign bonus to random places on board
-		while (num_bonus > 0) {
+		while (bonusNum > 0) {
 			int randX = random.nextInt(this.rows);
 			int randY = random.nextInt(this.columns);
 
 			Cell cell = this.cells[randX][randY];
 			if (cell.isEmpty()) {
 				cell.setBonus(true);
-				num_bonus--;
+				bonusNum--;
 			}
 		}
 
 		// Assign minus to random places on board
-		while (num_minus > 0) {
+		while (minusNum > 0) {
 			int randX = random.nextInt(this.rows);
 			int randY = random.nextInt(this.columns);
 
 			Cell cell = this.cells[randX][randY];
 			if (cell.isEmpty()) {
 				cell.setMinus(true);
-				num_minus--;
+				minusNum--;
 			}
 		}
 
 		// Assign competitor_1 (Italian chef: corresponds to cooking skills) to random places on board
-		while (num_italian_chef > 0) {
+		while (italianChefNum > 0) {
 			int randX = random.nextInt(this.rows);
 			int randY = random.nextInt(this.columns);
 
 			Cell cell = this.cells[randX][randY];
 			if (cell.isEmpty()) {
 				cell.setItalianChef(true);
-				num_italian_chef--;
+				italianChefNum--;
 			}
 		}
 
 		// Assign competitor_2 (Chinese chef: corresponds to chopping) to random places on board
-		while (num_chinese_chef > 0) {
+		while (chineseChefNum > 0) {
 			int randX = random.nextInt(this.rows);
 			int randY = random.nextInt(this.columns);
 
 			Cell cell = this.cells[randX][randY];
 			if (cell.isEmpty()) {
 				cell.setChineseChef(true);
-				num_chinese_chef--;
+				chineseChefNum--;
 			}
 		}   
 	}
@@ -210,8 +210,8 @@ public class Board extends JPanel {
 		ImageIcon lostIcon = new ImageIcon("src/img/j2.jpg");
 		// Update status bar information
 		this.playerNameStatus.setText("Player: " + this.player.getPlayerName());
-		this.skill1_Status.setText("Cooking: " + Integer.toString(this.player.getCookingSkills()));
-		this.skill2_Status.setText("Chopping: " + Integer.toString(this.player.getChopping()));
+		this.skillStatus1.setText("Cooking: " + Integer.toString(this.player.getCookingSkills()));
+		this.skillStatus2.setText("Chopping: " + Integer.toString(this.player.getChopping()));
 		this.energyStatus.setText("Energy: " + Integer.toString(this.player.getEnergy()));
 		this.bestScore.setText("Best Score: " + Integer.toString(highscore));
 
@@ -235,7 +235,7 @@ public class Board extends JPanel {
 				if (cell.isGoal() && cell.isPlayer() && player.getEnergy() >= 0) {
 					inGame = false;
 					gamewin = true;
-					
+
 					SoundEffect.WIN.play();
 					score = player.getEnergy() + player.getChopping() + player.getCookingSkills();
 					updateHighScore();
@@ -477,7 +477,7 @@ public class Board extends JPanel {
 
 	// Record and update scores in a text file
 	private void updateHighScore() {
-		String scoreFilePath = 	"src/score.txt";
+		String scoreFilePath = 	level.getScoreFilePath();
 		File f = new File(scoreFilePath);
 		// Read the current high score
 		try {
@@ -505,7 +505,7 @@ public class Board extends JPanel {
 				reader.close();}
 
 		} catch (IOException ex) {
-			System.err.println("ERROR missing file 'src/score.txt'");
+			System.err.println("ERROR missing score file");
 			System.exit(1);
 		}
 

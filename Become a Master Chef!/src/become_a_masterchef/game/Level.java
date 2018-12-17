@@ -6,58 +6,87 @@ package become_a_masterchef.game;
  */
 public class Level {
 	private String levelName;
-	private int init_energy;								//Initial energy
-	private int italian_chef_skill;							//Italian chef's cooking_skills
-	private int chinese_chef_skill;							//Chinese chef's chopping
-	
+	private int initEnergy;								//Initial energy
+	private int italianChefSkill;							//Italian chef's cooking_skills
+	private int chineseChefSkill;							//Chinese chef's chopping
+	private String scoreFilePath;							// Path of score file
+
 	// Constructor 
 	public Level(String levelName) {
-		
+
 		this.levelName = levelName;
 		switch (levelName) {
 		case "Easy": 
-			init_energy = 50;
-			italian_chef_skill = 4;
-			chinese_chef_skill = 4;
+			setInitEnergy(50);
+			setItalianChefSkill(4);
+			setChineseChefSkill(4);
+			setScoreFilePath("src/scores/easyScores.txt");
 			break;
-		
+
 		case "Medium":
-			init_energy = 40;
-			italian_chef_skill = 5;
-			chinese_chef_skill = 5;
+			setInitEnergy(40);
+			setItalianChefSkill(5);
+			setChineseChefSkill(5);
+			setScoreFilePath("src/scores/mediumScores.txt");
+
 			break;
-			
+
 		case "Hard":
-			init_energy = 30;
-			italian_chef_skill = 6;
-			chinese_chef_skill = 6;
+			setInitEnergy(30);
+			setItalianChefSkill(6);
+			setChineseChefSkill(6);
+			setScoreFilePath("src/scores/hardScores.txt");
+
 			break;
-			
+
 		case "Hardest":
-			init_energy = 20;
-			italian_chef_skill = 7;
-			chinese_chef_skill = 7;
+			setInitEnergy(20);
+			setItalianChefSkill(7);
+			setChineseChefSkill(7);
+			setScoreFilePath("src/scores/hardestScores.txt");
+
 			break;
 		}
 	}
-	
+	// Setter and getter for each class variable
 	public void setLevelName(String levelName){
 		this.levelName = levelName;
 	}
-	
+
 	public String getLevelName(){
 		return this.levelName;
 	}
+
+	public void setInitEnergy(int initEnergy){
+		this.initEnergy = initEnergy;
+	}
 	
 	public int getInitEnergy() {
-		return init_energy;
+		return initEnergy;
+	}
+
+	public void setItalianChefSkill(int italianChefSkill){
+		this.italianChefSkill = italianChefSkill;
 	}
 	
 	public int getItalianChefSkill() {
-		return italian_chef_skill;
+		return italianChefSkill;
 	}
 	
-	public int getChineseChefSkill() {
-		return chinese_chef_skill;
+	public void setChineseChefSkill(int chineseChefSkill){
+		this.chineseChefSkill = chineseChefSkill;
 	}
+
+	public int getChineseChefSkill() {
+		return chineseChefSkill;
+	}
+
+	public void setScoreFilePath(String scoreFilePath) {
+		this.scoreFilePath = scoreFilePath;
+	}
+	
+	public String getScoreFilePath() {
+		return scoreFilePath;
+	}
+
 }
