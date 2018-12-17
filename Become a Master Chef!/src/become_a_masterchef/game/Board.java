@@ -71,14 +71,24 @@ public class Board extends JPanel {
 		// Game setup from user input
 		this.statusBar = pStatus;
 		this.playerNameStatus = new JLabel("");
+		this.playerNameStatus.setForeground(new Color(0, 0, 205));
+		this.playerNameStatus.setFont(new Font("Tahoma", Font.BOLD, 14));
 		statusBar.add(this.playerNameStatus);
 		this.energyStatus = new JLabel("");
+		this.energyStatus.setForeground(new Color(0, 128, 128));
+		this.energyStatus.setFont(new Font("Tahoma", Font.BOLD, 14));
 		statusBar.add(this.energyStatus);
 		this.skillStatus1 = new JLabel("");
+		this.skillStatus1.setForeground(new Color(0, 128, 128));
+		this.skillStatus1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		statusBar.add(this.skillStatus1);
 		this.skillStatus2 = new JLabel("");
+		this.skillStatus2.setForeground(new Color(0, 128, 128));
+		this.skillStatus2.setFont(new Font("Tahoma", Font.BOLD, 14));
 		statusBar.add(this.skillStatus2);
 		this.bestScore = new JLabel("");
+		this.bestScore.setForeground(new Color(165, 42, 42));
+		this.bestScore.setFont(new Font("Tahoma", Font.BOLD, 14));
 		statusBar.add(this.bestScore);
 
 		this.level = new Level(level);
@@ -210,11 +220,11 @@ public class Board extends JPanel {
 		ImageIcon winIcon = new ImageIcon("src/img/j6.jpg");
 		ImageIcon lostIcon = new ImageIcon("src/img/j2.jpg");
 		// Update status bar information
-		this.playerNameStatus.setText("Player: " + this.player.getPlayerName());
-		this.skillStatus1.setText("Cooking: " + Integer.toString(this.player.getCookingSkills()));
-		this.skillStatus2.setText("Chopping: " + Integer.toString(this.player.getChopping()));
-		this.energyStatus.setText("Energy: " + Integer.toString(this.player.getEnergy()));
-		this.bestScore.setText("Best Score: " + Integer.toString(highscore));
+		this.playerNameStatus.setText("Player:  " + this.player.getPlayerName());
+		this.skillStatus1.setText("Cooking:  " + Integer.toString(this.player.getCookingSkills()));
+		this.skillStatus2.setText("Chopping:  " + Integer.toString(this.player.getChopping()));
+		this.energyStatus.setText("Energy:  " + Integer.toString(this.player.getEnergy()));
+		this.bestScore.setText("Best Score:  " + Integer.toString(highscore));
 
 
 		for (int i = 0; i < this.rows; i++) {

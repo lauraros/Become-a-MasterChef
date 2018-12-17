@@ -41,7 +41,8 @@ public class BecomeAMasterChef{
 		// Welcoming Label
 		JLabel welcome = new JLabel("Welcome to Become a MasterChef!");
 		welcome.setHorizontalAlignment(SwingConstants.CENTER);
-		welcome.setFont(new Font("Tahoma", Font.BOLD, 14));
+		welcome.setForeground(new Color(165, 42, 42));
+		welcome.setFont(new Font("Verdana", Font.BOLD, 16));
 		mainPanel.add(welcome);
 
 		// Creating a separate panel for main Game settings
@@ -52,10 +53,12 @@ public class BecomeAMasterChef{
 		// Creating several components for the main Game settings
 		JLabel playerNameLabel = new JLabel("What's Your Name?");
 		playerNameLabel.setBounds(0, 0, 170, 20);
+		playerNameLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
 		playerNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		pSettings.add(playerNameLabel);
 
 		JTextField playerNameField = new JTextField();
+		playerNameField.setFont(new Font("Tahoma", Font.BOLD, 14));
 		playerNameField.setBounds(200, 0, 120, 20);
 		playerNameField.setHorizontalAlignment(SwingConstants.RIGHT);
 		pSettings.add(playerNameField);
@@ -63,18 +66,20 @@ public class BecomeAMasterChef{
 
 		JLabel levelLabel = new JLabel("Choose a Level");
 		levelLabel.setBounds(0, 20, 170, 20);
+		levelLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+
 		levelLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		pSettings.add(levelLabel);
 
 		JComboBox<String> levelBox = new JComboBox<>();
 		levelBox.setBounds(200, 20, 120, 20);
-		levelBox.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
+		levelBox.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
 		levelBox.setModel(new DefaultComboBoxModel<>(new String[] {"Easy", "Medium", "Hard", "Hardest"}));
 		pSettings.add(levelBox);
 
 		JLabel creditsLabel = new JLabel("<html><br>Choose Your Skills Balance <br>(10 Total Credits)</html>");
 		creditsLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		creditsLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
+		creditsLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
 		mainPanel.add(creditsLabel);
 
 		// Creating a separate Panel for skills settings for the game
@@ -83,22 +88,24 @@ public class BecomeAMasterChef{
 		FlowLayout fl_pSkills = new FlowLayout(FlowLayout.CENTER, 2, 2);
 		pSkills.setLayout(fl_pSkills);
 
-		JLabel skill1Label = new JLabel("Cooking Skills");
-		skill1Label.setForeground(new Color(165, 42, 42));
-		skill1Label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		JLabel skill1Label = new JLabel("Cooking");
+		skill1Label.setForeground(new Color(0, 128, 128));
+		skill1Label.setFont(new Font("Tahoma", Font.BOLD, 15));
 		pSkills.add(skill1Label);
 
 		SpinnerNumberModel skill1model = new SpinnerNumberModel( 5, 0, 10, 1 );
 		SpinnerNumberModel skill2model = new SpinnerNumberModel( 5, 0, 10, 1 );
 
 		JSpinner skill1V = new JSpinner( skill1model );
+		skill1V.setFont(new Font("Tahoma", Font.BOLD, 14));
 		JSpinner skill2V = new JSpinner( skill2model );
+		skill2V.setFont(new Font("Tahoma", Font.BOLD, 14));
 		pSkills.add(skill1V);
 		pSkills.add(skill2V);
 
 		JLabel skill2Label = new JLabel("Chopping");
 		skill2Label.setForeground(new Color(0, 128, 128));
-		skill2Label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		skill2Label.setFont(new Font("Tahoma", Font.BOLD, 15));
 		pSkills.add(skill2Label);
 
 		// Add a Listener to both spinners so that their value is interdependent
@@ -126,7 +133,7 @@ public class BecomeAMasterChef{
 
 		// Add a button to start the Game
 		JButton startButton = new JButton("Start");
-		startButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+		startButton.setFont(new Font("Tahoma", Font.BOLD, 18));
 		startButton.setForeground(new Color(0, 0, 205));
 		mainPanel.add(startButton);
 		startButton.setEnabled(true);
