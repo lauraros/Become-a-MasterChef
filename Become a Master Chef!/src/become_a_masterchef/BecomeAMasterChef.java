@@ -141,7 +141,7 @@ public class BecomeAMasterChef{
 				//Dialog Message with Game Rules
 				ImageIcon masterChefIcon = new ImageIcon("src/img/MASTER_LOGO.jpg");;
 				JOptionPane.showMessageDialog(null, "You are a very good chef at your little restaurant downtown.\n"
-						+ "Lately this hasn't be enough to you...you want to be famous!\n"
+						+ "Lately this hasn't been enough to you...you want to be famous!\n"
 						+ "You want to have your own TV show, write your book and serve the very VIP people!\n"
 						+ "Now you want to become a MasterChef!\n"
 						+ "You reached the final level of the most important chefs competition around the world.\n"
