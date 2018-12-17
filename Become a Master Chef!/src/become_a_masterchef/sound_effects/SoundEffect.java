@@ -28,7 +28,7 @@ public enum SoundEffect {
 	private Clip clip;
 
 	// Constructor to construct each element of the enum with its own sound file.
-	SoundEffect(String soundFileName) {
+	private SoundEffect(String soundFileName) {
 		try {
 
 			// Use URL (instead of File) to read from disk and JAR.
