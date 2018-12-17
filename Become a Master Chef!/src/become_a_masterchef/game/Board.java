@@ -249,7 +249,7 @@ public class Board extends JPanel {
 								highscore + ".\n\nDo you want to play again?",
 								"You WON!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, winIcon, null, null);
 						if(input == JOptionPane.YES_OPTION){
-							BecomeAMasterChef.initGUI();
+							BecomeAMasterChef.initGUI(this.player.getPlayerName());
 							return;
 						} else {
 							System.exit(0);
@@ -263,7 +263,7 @@ public class Board extends JPanel {
 								"!\n\nDo you want to play again?",
 								"You WON!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, winIcon, null, null);
 						if(input == JOptionPane.YES_OPTION){
-							BecomeAMasterChef.initGUI();
+							BecomeAMasterChef.initGUI(this.player.getPlayerName());
 							return;
 						} else {
 							System.exit(0);
@@ -276,7 +276,7 @@ public class Board extends JPanel {
 								+ ". The best score ever is " + highscore + ".\n\nDo you want to play again?",
 								"You WON!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, winIcon, null, null);
 						if(input == JOptionPane.YES_OPTION){
-							BecomeAMasterChef.initGUI();
+							BecomeAMasterChef.initGUI(this.player.getPlayerName());
 							return;
 						} else {
 							System.exit(0);
@@ -290,7 +290,7 @@ public class Board extends JPanel {
 					input= JOptionPane.showOptionDialog(null, "You're out of energy. Game Over!\nDo you want to play again?",
 							"Game Over!", JOptionPane.YES_NO_OPTION,  JOptionPane.INFORMATION_MESSAGE, lostIcon, null, null);
 					if(input == JOptionPane.YES_OPTION){
-						BecomeAMasterChef.initGUI();
+						BecomeAMasterChef.initGUI(this.player.getPlayerName());
 						return;
 					} else {
 						System.exit(0);
