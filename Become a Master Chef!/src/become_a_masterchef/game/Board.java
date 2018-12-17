@@ -37,6 +37,7 @@ public class Board extends JPanel {
 	private final int IMAGE_GOAL		    = 6;
 	private final int IMAGE_VISIBLE			= 7;
 
+	// Variables for the status information in the status bar
 	private JPanel statusBar;
 	private JLabel playerNameStatus;
 	private JLabel energyStatus;
@@ -44,15 +45,15 @@ public class Board extends JPanel {
 	private JLabel skillStatus2;
 	private JLabel bestScore;
 
-	private Player player;
-	private Level level;
-	private Cell[][] cells;
-	private int[] playerPos = new int[2];
-	private Image[] img;
-	private int score;
-	private int highscore;
+	private Player player;					// Player object
+	private Level level;					// Level object
+	private Cell[][] cells;					// Container for the Cell objects
+	private Image[] img;					// Container for the images
+	private int[] playerPos = new int[2];	// Saves the current position of the player
+	private int score;						// Saves the score for game won
+	private int highscore;					// Saves the highest score of all time
 
-	// Number of all objects on the board
+	// Number of all objects on the board (to be assigned at the beginning)
 	private int playerNum = 1;
 	private int goalNum = 1;
 	private int bonusNum = 5;
@@ -60,9 +61,9 @@ public class Board extends JPanel {
 	private int italianChefNum = 3;
 	private int chineseChefNum = 3;
 
-	private int rows = 16, columns = 16;
+	private int rows = 16, columns = 16;	// board size
 
-	private boolean inGame;
+	private boolean inGame;					// if the game is playing
 
 	// Constructor 
 	public Board(JPanel pStatus, String playerName, String level, int cookingSkills) {
@@ -177,7 +178,7 @@ public class Board extends JPanel {
 			}
 		}
 
-		// Assign competitor_1 (Italian chef: corresponds to cooking skills) to random places on board
+		// Assign opponent_1 (Italian chef: corresponds to cooking skills) to random places on board
 		while (italianChefNum > 0) {
 			int randX = random.nextInt(this.rows);
 			int randY = random.nextInt(this.columns);
@@ -189,7 +190,7 @@ public class Board extends JPanel {
 			}
 		}
 
-		// Assign competitor_2 (Chinese chef: corresponds to chopping) to random places on board
+		// Assign opponent_2 (Chinese chef: corresponds to chopping) to random places on board
 		while (chineseChefNum > 0) {
 			int randX = random.nextInt(this.rows);
 			int randY = random.nextInt(this.columns);

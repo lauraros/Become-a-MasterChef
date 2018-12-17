@@ -2,14 +2,14 @@ package become_a_masterchef.game;
 
 /* A cell object controls one cell of the board. */
 public class Cell {
-	private boolean player;
-	private boolean cover;			//cell is invisible
-	private boolean empty;			//cell is empty
-	private boolean goal;			//MasterChef Title
-	private boolean bonus;			//bonus is an event that increases energy
-	private boolean minus;			//minus is an event that decreases energy
-	private boolean italianChef;	//cooking_skills_competitor
-	private boolean chineseChef;	//chopping_competitor
+	private boolean player;			// player is at the cell
+	private boolean cover;			// cell is invisible
+	private boolean empty;			// cell is empty
+	private boolean goal;			// MasterChef Title is at the cell
+	private boolean bonus;			// bonus is at the cell (increases energy)
+	private boolean minus;			// minus is at the cell (decreases energy)
+	private boolean italianChef;	// cooking_skills opponent is at the cell
+	private boolean chineseChef;	// chopping opponent is at the cell
 
 	// Constructor 
 	public Cell() {
@@ -23,6 +23,7 @@ public class Cell {
 		this.chineseChef  = false;
 	}
 
+	// Setter and getter for each class variable
 	public void setPlayer(boolean b) {
 		this.player = b;
 	}
