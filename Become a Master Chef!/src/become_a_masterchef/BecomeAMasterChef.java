@@ -73,7 +73,7 @@ public class BecomeAMasterChef{
 		pSettings.add(playerNameField);
 		playerNameField.setColumns(10);
 
-		JLabel levelLabel = new JLabel("Choose a Level");
+		JLabel levelLabel = new JLabel("Choose a Level:");
 		levelLabel.setBounds(0, 20, 170, 20);
 		levelLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
 		levelLabel.setHorizontalAlignment(SwingConstants.CENTER);
