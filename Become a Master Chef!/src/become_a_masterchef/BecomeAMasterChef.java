@@ -30,20 +30,29 @@ public class BecomeAMasterChef{
 		frame.setTitle("Become a MasterChef!");
 		frame.setBounds(100, 100, 350, 250);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
+		//frame.getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 
 		// Creating a main panel 
 		JPanel mainPanel = new JPanel();
 		frame.getContentPane().add(mainPanel);
-		mainPanel.setLayout(new GridLayout(5, 2, 0, 0));
+		mainPanel.setLayout(new GridLayout(6, 2, 0, 0));
 		mainPanel.setPreferredSize(new Dimension(350, 350));
 
 		// Welcoming Label
-		JLabel welcome = new JLabel("Welcome to Become a MasterChef!");
+		JLabel welcome = new JLabel("Welcome to...");
 		welcome.setHorizontalAlignment(SwingConstants.CENTER);
+		welcome.setVerticalAlignment(SwingConstants.BOTTOM);
 		welcome.setForeground(new Color(165, 42, 42));
-		welcome.setFont(new Font("Verdana", Font.BOLD, 16));
+		welcome.setFont(new Font("Tahoma", Font.BOLD, 14));
 		mainPanel.add(welcome);
+		
+		// Game Name Label
+		JLabel gameName = new JLabel("Become a MasterChef!");
+		gameName.setHorizontalAlignment(SwingConstants.CENTER);
+		gameName.setVerticalAlignment(SwingConstants.TOP);
+		gameName.setForeground(new Color(165, 42, 42));
+		gameName.setFont(new Font("Tahoma", Font.BOLD, 22));
+		mainPanel.add(gameName);
 
 		// Creating a separate panel for main Game settings
 		JPanel pSettings = new JPanel();
@@ -67,7 +76,6 @@ public class BecomeAMasterChef{
 		JLabel levelLabel = new JLabel("Choose a Level");
 		levelLabel.setBounds(0, 20, 170, 20);
 		levelLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
-
 		levelLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		pSettings.add(levelLabel);
 
@@ -77,7 +85,7 @@ public class BecomeAMasterChef{
 		levelBox.setModel(new DefaultComboBoxModel<>(new String[] {"Easy", "Medium", "Hard", "Hardest"}));
 		pSettings.add(levelBox);
 
-		JLabel creditsLabel = new JLabel("<html><br>Choose Your Skills Balance <br>(10 Total Credits)</html>");
+		JLabel creditsLabel = new JLabel("<html><br>Choose Your Skills Balance<br>(10 Total Credits)</html>");
 		creditsLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		creditsLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
 		mainPanel.add(creditsLabel);
