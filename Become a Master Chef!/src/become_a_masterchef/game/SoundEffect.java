@@ -1,4 +1,4 @@
-package become_a_masterchef.sound_effects;
+package become_a_masterchef.game;
 
 //Import sound related libraries 
 import java.io.*;
@@ -6,7 +6,7 @@ import java.net.URL;
 import javax.sound.sampled.*;
 
 /*
- * This enum encapsulates all the sound effects of our game, so as to separate the sound playing
+ * This enumeration encapsulates all the sound effects of our game, so as to separate the sound playing
  * codes from the game codes. It allows to simply invoke SoundEffect.SOUND_NAME.play().
  * to play a sound.
  */

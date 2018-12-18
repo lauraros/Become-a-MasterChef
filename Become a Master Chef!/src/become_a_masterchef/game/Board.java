@@ -11,7 +11,6 @@ import java.util.Random;
 
 // Import Game related sources
 import become_a_masterchef.*;
-import become_a_masterchef.sound_effects.SoundEffect;
 
 import java.io.*;
 
