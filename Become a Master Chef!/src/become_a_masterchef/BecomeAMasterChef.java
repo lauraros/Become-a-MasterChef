@@ -163,7 +163,7 @@ public class BecomeAMasterChef{
 						+ "You are almost there but you need to beat the other two finalists,\n"
 						+ "the Italian chef and the Chinese chef and finally win the MasterChef Title!\n"
 						+ "Watch out to not waste all of your energy during the quest,\n"
-						+ "coffee and chamomile respectively increase and decrease your energy!\n"
+						+ "bonus and minus on the board respectively increase and decrease your energy!\n"
 						+ "Good Luck!",
 						"Become a MasterChef!",
 						JOptionPane.PLAIN_MESSAGE, masterChefIcon);

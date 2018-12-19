@@ -1,18 +1,28 @@
 package become_a_masterchef.game;
 
 // Import GUI related libraries 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 // Import Random class 
 import java.util.Random;
 
 // Import Game related sources
-import become_a_masterchef.*;
-
-import java.io.*;
+import become_a_masterchef.BecomeAMasterChef;
 
 /* 
  * A board object contains the board for a new game and a JPanel status bar:
@@ -104,7 +114,7 @@ public class Board extends JPanel {
 
 		this.setDoubleBuffered(true);
 		this.addMouseListener(new PathAdapter());
-		this.newGame();
+		this.playGame();
 	}
 
 
@@ -121,7 +131,7 @@ public class Board extends JPanel {
 
 
 	// Start a new game
-	public void newGame () {
+	public void playGame () {
 		Random random = new Random();
 		score = 0;
 
