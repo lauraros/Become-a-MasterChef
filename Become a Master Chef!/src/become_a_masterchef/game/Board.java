@@ -139,7 +139,7 @@ public class Board extends JPanel {
 		this.initCells();
 
 		// Information of settings are shown in the statusBar below the board
-		this.playerNameStatus.setText("Player:" + this.player.getPlayerName());
+		this.playerNameStatus.setText("Player:" + this.player.getPlayerName().substring(0, 9));
 		this.skillStatus1.setText("Cooking: " + Integer.toString(this.player.getCookingSkills()));
 		this.skillStatus2.setText("Chopping: " + Integer.toString(this.player.getChopping()));
 		this.energyStatus.setText("Energy: " + Integer.toString(this.player.getEnergy()));
@@ -229,7 +229,7 @@ public class Board extends JPanel {
 		ImageIcon winIcon = new ImageIcon("src/img/j6.jpg");
 		ImageIcon lostIcon = new ImageIcon("src/img/j2.jpg");
 		// Update status bar information
-		this.playerNameStatus.setText("Player:  " + this.player.getPlayerName());
+		this.playerNameStatus.setText("Player:  " + this.player.getPlayerName().substring(0, 9));
 		this.skillStatus1.setText("Cooking:  " + Integer.toString(this.player.getCookingSkills()));
 		this.skillStatus2.setText("Chopping:  " + Integer.toString(this.player.getChopping()));
 		this.energyStatus.setText("Energy:  " + Integer.toString(this.player.getEnergy()));
