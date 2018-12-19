@@ -313,7 +313,7 @@ public class BecomeAMasterChef{
 				String level = (String)levelBox.getSelectedItem();
 				int cookingSkills = (Integer)skill1V.getValue();
 
-				// Creating a new game with input values as settings
+				// Creating a new game with input values as setting
 				new Game(playerName, level, cookingSkills);
 				frame.dispose();
 			}
