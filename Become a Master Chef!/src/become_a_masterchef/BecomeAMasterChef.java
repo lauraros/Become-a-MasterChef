@@ -173,6 +173,8 @@ public class BecomeAMasterChef{
 				String playerName = (String)playerNameField.getText();
 				if (playerName.equals("")) {
 					playerName = "(Empty)";
+				} else if (playerName.length()>10) {
+					playerName = playerName.substring(0, 9);	
 				}
 				String level = (String)levelBox.getSelectedItem();
 				int cookingSkills = (Integer)skill1V.getValue();
@@ -305,6 +307,8 @@ public class BecomeAMasterChef{
 				String playerName = (String)playerNameField.getText();
 				if (playerName.equals("")) {
 					playerName = "(Empty)";
+				} else if (playerName.length()>10) {
+					playerName = playerName.substring(0, 9);	
 				}
 				String level = (String)levelBox.getSelectedItem();
 				int cookingSkills = (Integer)skill1V.getValue();
